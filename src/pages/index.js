@@ -8,7 +8,11 @@ export default function Home() {
   return (
     <div className='bg-background text-pText h-screen overflow-x-hidden z-0'>
       <Navbar></Navbar>
-      cerfrv
+      <div class="absolute inset-0 flex justify-center items-center">
+          <p>
+            Hey, I'm Abhigyan, a passionate <span className='text-pHighlight font-bold'>Web Developer</span> who's highly curious about AI.
+          </p>
+      </div>
     </div>
   )
 }

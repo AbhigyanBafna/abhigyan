@@ -25,12 +25,12 @@ export default function Navbar() {
               transition={{
                 duration: 0.6,
               }}
-              className="flex flex-row items-center pl-4 font-sans text-6xl text-pHighlight"
+              className="flex flex-row items-center pl-4 text-6xl text-pHighlight"
         >
             ab
         </motion.div>
 
-        <div className="flex flex-row items-center pl-4 font-sans text-4xl text-heroCircles">
+        <div className="flex flex-row items-center pl-4 text-4xl text-sText">
             <Link href={'/about'} className="px-4">
               about
             </Link>

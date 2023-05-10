@@ -3,9 +3,9 @@
 const myColors = {
   'background': '#111010',
   'pText': '#F5F0F6',
+  'sText' :'#808080',
   'pHighlight' : '#FFB938',
   'sHighlight' : '#0267C1',
-  'heroCircles': '#808080',
   'cardBg': '#000000',
 };
 
