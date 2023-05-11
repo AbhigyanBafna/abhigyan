@@ -15,4 +15,8 @@
     font-weight: 600;
     font-style: normal;
 }
-  
+
+.image-fade-out {
+  filter: none;
+  transition: filter 0.5s ease-out;
+}

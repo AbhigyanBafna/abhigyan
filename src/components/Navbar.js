@@ -3,6 +3,7 @@
 import { SocialIcon } from "react-social-icons";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import clsx from 'clsx';
 
 export default function Navbar() {
 
@@ -30,14 +31,14 @@ export default function Navbar() {
             ab
         </motion.div>
 
-        <div className="flex flex-row items-center pl-4 text-4xl text-sText">
-            <Link href={'/about'} className="px-4">
+        <div className="flex flex-row items-center pl-4 text-4xl text-sText transition-all duration-700">
+            <Link href={'/about'} className='px-4 hover:text-white active:text-white'>
               about
             </Link>
-            <Link href={'/projects'} className="px-4">
+            <Link href={'/projects'} className="px-4 hover:text-white active:text-white">
               projects
             </Link>
-            <Link href={'/blog'} className="px-4">
+            <Link href={'/blog'} className="px-4 hover:text-white active:text-white">
               blog
             </Link>
         </div>
