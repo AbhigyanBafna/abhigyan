@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar'
 
 export default function Home() {
   return (
-    <div className='bg-background text-pText h-screen overflow-x-hidden z-0'>
+    <div className='bg-background text-pText h-screen overflow-x-hidden'>
       <Navbar></Navbar>
       <p className='text-3xl mt-28 mx-auto text-center max-w-[800px]'>
         Hey, I'm <span className='text-pHighlight'> Abhigyan </span>, a passionate Web Developer
