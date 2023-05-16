@@ -7,7 +7,7 @@ export default function SocialLinks() {
                 <AnimatedSocialIcon
                 brandName="github"
                 url="https://github.com/AbhigyanBafna"
-                animation="shrink"
+                animation="grow"
                 defaultColor="gray"
                 hoverColor="white"
                 width="2em"
@@ -16,7 +16,7 @@ export default function SocialLinks() {
                 <AnimatedSocialIcon
                 brandName="instagram"
                 url="https://github.com/AbhigyanBafna"
-                animation="shrink"
+                animation="grow"
                 defaultColor="gray"
                 hoverColor="white"
                 width="2em"
