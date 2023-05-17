@@ -1,18 +1,19 @@
 import Image from 'next/image'
 import Navbar from '@/components/Navbar'
 import SocialLinks from '@/components/SocialLinks'
+import { hero, avatar, bio } from '@/lib/info'
 
 export default function Home() {
   return (
     <div className='bg-background text-pText h-screen overflow-x-hidden'>
       <Navbar shouldAnimate={true} />
-      <p className='text-3xl mt-28 mx-auto text-center max-w-[800px]'>
-        Hey, I'm <span className='text-pHighlight'> Abhigyan </span>, a passionate Web Developer
-        who's highly curious about <span className='underline text-pHighlight'> AI </span>
+
+      <p className='text-3xl mt-24 mx-auto text-center max-w-[800px]'>
+        {hero()}
       </p>
 
       <Image
-        src={'/profilePic.jpg'}
+        src={ avatar }
         alt='Profile Picture'
         width={170}
         height={170}
@@ -20,8 +21,7 @@ export default function Home() {
       />
       
       <p className='mt-10 text-xl text-center mx-auto w-[800px]'>
-        I'm an engineering undergrad in awe with the Tech World. I develop web apps until the perfectionist 
-        in me is satisfied. Still finding my place out here and enjoying it while the journey lasts.
+        {bio()}
       </p>
 
       <SocialLinks />
