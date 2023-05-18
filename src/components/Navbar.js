@@ -1,10 +1,10 @@
 //The one with changing color, border and glassmorphism
 
-import { SocialIcon } from "react-social-icons";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
+import { SocialIcon } from "react-social-icons";
 
 const navItems = {
   '/about': {
@@ -22,41 +22,49 @@ export default function Navbar({ shouldAnimate }) {
   let pathname = usePathname() || '/';
 
   if (!shouldAnimate) {
+    return(
+      <div className="mainNav">
 
-    return (
-        <div className="sticky top-0 p-5 flex justify-between z-10">
+          <div className="homeBar">
 
-          <div className="flex flex-row items-center pl-4 text-6xl text-pHighlight">
             <Link
               href={'/'}>
               ab
             </Link>
+
+            <div className="md:hidden">
+              <SocialIcon network="email" fgColor="gray" bgColor="transparent" style={{ height: 70, width: 70 }}/>
+            </div>
+
           </div>
 
-          <div className="flex flex-row items-center pl-4 text-4xl text-sText transition-all duration-700">
-          {Object.entries(navItems).map(([path, { name }]) => {
-                const isActive = path === pathname;
-                console.log(isActive)
-                return (
-                  <Link
-                    key={path}
-                    href={path}
-                    className={clsx(
-                      'px-4 hover:text-white',
-                      {
-                        'text-white': isActive,
-                      }
-                    )}
-                  >
-                    <span>
-                      {name}
-                    </span>
-                  </Link>
-                );
-            })}
+          <div className="subNav">
+
+            {Object.entries(navItems).map(([path, { name }]) => {
+                  const isActive = path === pathname;
+                  console.log(isActive)
+                  return (
+                    <Link
+                      key={path}
+                      href={path}
+                      className={clsx(
+                        'px-2 hover:text-white md:px-4',
+                        {
+                          'text-white': isActive,
+                        }
+                      )}
+                    >
+                      <span>
+                        {name}
+                      </span>
+                    </Link>
+                  );
+              })
+            }
+
           </div>
 
-        <div className="flex flex-row items-center cursor-pointer">
+        <div className="mailToggle">
           <SocialIcon network="email" fgColor="gray" bgColor="transparent" style={{ height: 90, width: 90 }}/>
         </div>
 
@@ -64,34 +72,57 @@ export default function Navbar({ shouldAnimate }) {
     );
   }
   else {
-  return (
-    <motion.div 
-        className="sticky top-0 p-5 flex justify-between z-10"
-        transition={{ duration: 1 }}>
+    return(
+      <div className="mainNav">
 
-        <motion.div
+        <div className="homeBar">
+          
+          <motion.div
             initial={{
-                x: -500,
-                opacity: 0,
-                scale: 0.5,
-              }}
-              animate={{
-                x: 0,
-                opacity: 1,
-                scale: 1,
-              }}
-              transition={{
-                duration: 0.6,
-              }}
-              className="flex flex-row items-center pl-4 text-6xl text-pHighlight"
-        >
-          <Link
-            href={'/'}>
-            ab
-          </Link>
-        </motion.div>
+              x: -500,
+              opacity: 0,
+              scale: 0.5,
+            }}
+            animate={{
+              x: 0,
+              opacity: 1,
+              scale: 1,
+            }}
+            transition={{
+              duration: 0.6,
+            }}>
 
-        <div className="flex flex-row items-center pl-4 text-4xl text-sText transition-all duration-700">
+              <Link
+                href={'/'}>
+                ab
+              </Link>
+
+          </motion.div>
+
+          <motion.div
+            initial={{
+              x: 500,
+              opacity: 0,
+              scale: 0.5,
+            }}
+            animate={{
+              x: 0,
+              opacity: 1,
+              scale: 1,
+            }}
+            transition={{
+              duration: 0.5,
+            }}
+            className="md:hidden">
+
+              <SocialIcon network="email" fgColor="gray" bgColor="transparent" style={{ height: 70, width: 70 }}/>
+
+          </motion.div>
+
+        </div>
+
+        <div className="subNav">
+
           {Object.entries(navItems).map(([path, { name }]) => {
                 const isActive = path === pathname;
                 console.log(isActive)
@@ -100,7 +131,7 @@ export default function Navbar({ shouldAnimate }) {
                     key={path}
                     href={path}
                     className={clsx(
-                      'px-4 hover:text-white',
+                      'px-2 hover:text-white md:px-4',
                       {
                         'text-white': isActive,
                       }
@@ -111,16 +142,19 @@ export default function Navbar({ shouldAnimate }) {
                     </span>
                   </Link>
                 );
-            })}
-            {/* <Link href={'/about'} className='px-4 hover:text-white active:text-white'>
-              about
-            </Link>
-            <Link href={'/projects'} className="px-4 hover:text-white active:text-white">
-              projects
-            </Link>
-            <Link href={'/blog'} className="px-4 hover:text-white active:text-white">
-              blog
-            </Link> */}
+            })
+          }
+          {/* Old Stuff
+          <Link href={'/about'} className='px-4 hover:text-white active:text-white'>
+            about
+          </Link>
+          <Link href={'/projects'} className="px-4 hover:text-white active:text-white">
+            projects
+          </Link>
+          <Link href={'/blog'} className="px-4 hover:text-white active:text-white">
+            blog
+          </Link> */}
+            
         </div>
 
         <motion.div
@@ -137,12 +171,13 @@ export default function Navbar({ shouldAnimate }) {
           transition={{
             duration: 0.5,
           }}
-          className="flex flex-row items-center cursor-pointer"
-        >
-          <SocialIcon network="email" fgColor="gray" bgColor="transparent" style={{ height: 90, width: 90 }}/>
-      </motion.div>
+          className="mailToggle">
 
-    </motion.div>
-  );
-        }
+          <SocialIcon network="email" fgColor="gray" bgColor="transparent" style={{ height: 90, width: 90 }}/>
+
+        </motion.div>
+
+      </div>
+    );
+  }
 }
