@@ -1,17 +1,9 @@
 import Image from 'next/image';
-import { useRef } from 'react';
-
 
 export default function Projects() {
 
-    // const ref = useRef(null);
-
-    // const scroll = (scrollOffset) => {
-    //     ref.current.scrollLeft += scrollOffset;
-    // };
-
     return(
-        <div className="w-full max-w-[800px] mx-auto p-3 flex overflow-x-scroll overflow-y-hidden scrollbar-thin scrollbar-track-sText/20 scrollbar-thumb-blue-700 space-x-4" /*ref={ref} style={{ scrollBehavior: 'smooth' }}*/ >
+        <div className="w-full max-w-[800px] mx-auto p-3 flex overflow-x-scroll overflow-y-hidden scrollbar-thin scrollbar-track-sText/20 scrollbar-thumb-blue-700 space-x-4" >
                 
             <div class="max-w-[20rem] min-w-[20rem] min-h-[450px] bg-gray-800 border border-gray-700 rounded-lg mx-auto">
                 <a href="#">

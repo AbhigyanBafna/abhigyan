@@ -16,10 +16,13 @@
     "eslint-config-next": "13.4.1",
     "framer-motion": "^10.12.9",
     "next": "13.4.1",
+    "next-sanity": "^4.3.2",
     "react": "18.2.0",
     "react-animated-social-icons": "^1.1.0",
     "react-dom": "18.2.0",
-    "react-social-icons": "^5.15.0"
+    "react-html-parser": "^2.0.2",
+    "react-social-icons": "^5.15.0",
+    "sanity": "^3.11.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

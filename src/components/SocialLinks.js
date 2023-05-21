@@ -1,23 +1,6 @@
 import {AnimatedSocialIcon} from 'react-animated-social-icons'
-import { motion } from "framer-motion";
-import Link from "next/link";
-import clsx from 'clsx';
-import { usePathname } from 'next/navigation';
 
 export default function SocialLinks() {
-    let pathname = usePathname() || '/';
-
-    const navItems = {
-        '/about': {
-          name: 'about',
-        },
-        '/projects': {
-          name: 'projects',
-        },
-        '/blog': {
-          name: 'blog',
-        },
-      };
 
     return(
         <div>
