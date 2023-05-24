@@ -1,16 +1,30 @@
-import Navbar from '@/components/Navbar'
-import SocialLinks from '@/components/SocialLinks'
+import RootLayout from '../utils/layout'
+import { fetchInfo, fetchSocials } from '@/utils/fetchData';
 
-export default function Blog() {
+export default function Blog( {libInfo, socials} ) {
     return(
-        <div className='bg-background text-pText h-screen overflow-x-hidden'>
-            <Navbar shouldAnimate={false}/>
+        <RootLayout email={libInfo.email} socials={socials}>
+
             <p className='text-3xl mt-28 mx-auto text-center max-w-[800px]'>
                 Coming Soon
             </p>
 
-
-            <SocialLinks />
-        </div>
+        </RootLayout>
     )
 }
+
+export async function getStaticProps() {
+    const data = await fetchInfo();
+    const libInfo = data.libInfo?.[0]
+  
+    const socials = await fetchSocials();
+  
+    return {
+      props: {
+        libInfo,
+        socials,
+      },
+
+      revalidate: 10,
+    };
+};

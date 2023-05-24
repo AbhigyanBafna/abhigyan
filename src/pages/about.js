@@ -1,47 +1,61 @@
-import Navbar from '@/components/Navbar'
-import SocialLinks from '@/components/SocialLinks'
-import { about, about2 } from '@/lib/info'
-import Link from 'next/link'
-import { SocialIcon } from 'react-social-icons'
+import { info } from '@/lib/info'
 import { ArrowIcon, FileIcon } from "@/lib/icons";
+import RootLayout from '../utils/layout'
+import { fetchInfo, fetchSocials } from '@/utils/fetchData';
 
-export default function About() {
+export default function About( {libInfo, socials} ) {
 
     return(
-        <div className='bg-background text-pText h-screen overflow-x-hidden'>
-            <Navbar shouldAnimate={false}/>
+        <RootLayout email={libInfo.email} socials={socials}>
 
             <div className='mx-auto max-w-[800px] pr-4 pl-4'>
-            <p className='text-4xl mt-8 md:mt-0'>
-                <span className='text-red-500'>About</span> Me
-            </p>
 
-            <p className='text-lg'>
-                {about()}
-            </p>
+                <p className='text-4xl mt-8 md:mt-0'>
+                    <span className='text-red-500'>About</span> Me
+                </p>
 
-            <hr className='w-full mx-0 m-16 border-red-500' />
+                <p className='text-lg'>
+                    { info(libInfo.about1) }
+                </p>
 
-            <p className='text-lg mt-16'>
-                {about2()}
-            </p>
+                <hr className='w-full mx-0 m-16 border-red-500' />
 
-            <div className="pt-8 flex flex-col gap-3 md:flex-row md:gap-2">
-                
-                <a rel="noopener noreferrer" target="_blank" href="https://github.com/leerob" className="flex w-2/3 md:w-1/2 mx-auto pr-4 border border-neutral-700 rounded-lg items-center text-neutral-200 hover:bg-neutral-900 transition-all justify-between">
+                <p className='text-lg mt-16'>
+                    { info(libInfo.about2) }
+                </p>
 
-                    <div className="flex items-center p-5">
-                        <FileIcon />
-                        <div className="ml-3 font-bold text-xl">Resume</div>
-                    </div>
-                    <ArrowIcon />
+                <div className="pt-8 flex flex-col gap-3 md:flex-row md:gap-2">
                     
-                </a>
+                    <a rel="noopener noreferrer" target="_blank" href={libInfo.resume} className="flex w-2/3 md:w-1/2 mx-auto pr-4 border border-neutral-700 rounded-lg items-center text-neutral-200 hover:bg-neutral-900 transition-all justify-between">
+
+                        <div className="flex items-center p-5">
+                            <FileIcon />
+                            <div className="ml-3 font-bold text-xl">Resume</div>
+                        </div>
+                        <ArrowIcon />
+                        
+                    </a>
+
+                </div>
 
             </div>
-            </div>
 
-            <SocialLinks />
-        </div>
+        </RootLayout>
     )
 }
+
+export async function getStaticProps() {
+    const data = await fetchInfo();
+    const libInfo = data.libInfo?.[0]
+  
+    const socials = await fetchSocials();
+  
+    return {
+      props: {
+        libInfo,
+        socials,
+      },
+
+      revalidate: 10,
+    };
+};

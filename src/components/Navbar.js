@@ -4,6 +4,7 @@ import Link from "next/link";
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import { SocialIcon } from "react-social-icons";
+import { useState } from "react";
 
 const navItems = {
   '/about': {
@@ -17,22 +18,48 @@ const navItems = {
   },
 };
 
-export default function Navbar() {
+export default function Navbar( {email} ) {
   let pathname = usePathname() || '/';
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const handleClick = () => {
+    window.location.href = `mailto:${email}`;
+  };
 
   return(
     <div className="mainNav">
 
         <div className="homeBar">
 
-            <Link
-              href={'/'}>
-              ab
-            </Link>
+          <Link
+            href={'/'}>
+            ab
+          </Link>
 
 
-          <div className="md:hidden">
-            <SocialIcon network="email" fgColor="gray" bgColor="transparent" style={{ height: 70, width: 70 }}/>
+          <div 
+            onClick={handleClick}
+            className="md:hidden"
+            onMouseEnter={handleMouseEnter} 
+            onMouseLeave={handleMouseLeave}
+            >
+
+            <SocialIcon 
+              network="email" 
+              fgColor="gray" 
+              bgColor="transparent" 
+              style={{ height: 70, width: 70 }}
+            />
+
           </div>
 
         </div>
@@ -62,8 +89,20 @@ export default function Navbar() {
 
         </div>
 
-      <div className="mailToggle">
-        <SocialIcon network="email" fgColor="gray" bgColor="transparent" style={{ height: 90, width: 90 }}/>
+      <div
+        onClick={handleClick}
+        className="mailToggle" 
+        onMouseEnter={handleMouseEnter} 
+        onMouseLeave={handleMouseLeave}
+        >
+
+        <SocialIcon 
+          network="email" 
+          fgColor={isHovered ? 'white' : 'gray'}
+          bgColor="transparent" 
+          style={{ height: 90, width: 90 }}
+        />
+
       </div>
 
     </div>
