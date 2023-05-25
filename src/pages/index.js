@@ -6,7 +6,7 @@ import { fetchInfo, fetchSocials } from '@/utils/fetchData';
 import { urlFor } from '@/utils/sanityUtils';
 
 export default function Home({ libInfo, links }) {
-  console.log(libInfo)
+  
   return (
     <Layout email={libInfo?.email} socials={links}>
 
