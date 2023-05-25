@@ -1,15 +1,17 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import SocialLinks from '@/components/SocialLinks';
+import { Analytics } from '@vercel/analytics/react';
 
-const RootLayout = ({ children, email, socials }) => {
+const Layout = ({ children, email, socials }) => {
   return (
     <div>
       <Navbar email={email} />
       {children}
+      <Analytics />
       <SocialLinks links={socials} />
     </div>
   );
 };
 
-export default RootLayout;
+export default Layout;

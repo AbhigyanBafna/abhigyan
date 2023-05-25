@@ -1,4 +1,4 @@
-import { SocialIcon } from 'react-social-icons';
+import { AnimatedSocialIcon } from 'react-animated-social-icons';
 
 export default function SocialLinks( {links} ) {
 
@@ -8,14 +8,17 @@ export default function SocialLinks( {links} ) {
             <div className='hidden md:block'>
                 <div className="fixed bottom-28 left-9 flex flex-col space-y-[-15px]">
 
-                    {links.socials.map((social) => (
+                    {links?.socials.map((social) => (
 
-                    <SocialIcon
-                    key={social._id}
-                    url={social.url}
-                    fgColor="gray" 
-                    bgColor="transparent"
-                    style={{ height: '1.75em', width: '1.75em' }}
+                    <AnimatedSocialIcon
+                        key={social?._id}
+                        url={social?.url}
+                        brandName={social?.title.toLowerCase()}
+                        animation="grow"
+                        defaultColor="gray"
+                        hoverColor="white"
+                        width="1.75rem"
+                        animationDuration={0.8}
                     />
 
                     ))}
@@ -28,20 +31,24 @@ export default function SocialLinks( {links} ) {
 
             <div className='flex justify-center items-center mx-auto space-x-4 md:hidden'>
                     
-                {links.socials.map((social) => (
+                {links?.socials.map((social) => (
                     
-                    <div key={social._id}>
-                        <SocialIcon
-                        url={social.url}
-                        fgColor="gray" 
-                        bgColor="transparent"
-                        style={{ height: '1.75em', width: '1.75em' }}
+                    <div key={social?._id}>
+
+                        <AnimatedSocialIcon
+                            url={social?.url}
+                            brandName={social?.title.toLowerCase()}
+                            animation="grow"
+                            defaultColor="gray"
+                            hoverColor="white"
+                            width="1.75rem"
+                            animationDuration={0.8}
                         />
+                        
                     </div>
                 ))}
  
             </div>
-
             
         </div>
     )

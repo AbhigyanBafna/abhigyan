@@ -1,5 +1,3 @@
-//The one with changing color, border and glassmorphism
-
 import Link from "next/link";
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';

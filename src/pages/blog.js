@@ -1,30 +1,41 @@
-import RootLayout from '../utils/layout'
+import Layout from '../utils/layout'
 import { fetchInfo, fetchSocials } from '@/utils/fetchData';
 
 export default function Blog( {libInfo, socials} ) {
     return(
-        <RootLayout email={libInfo.email} socials={socials}>
+        <Layout email={libInfo?.email} socials={socials}>
 
             <p className='text-3xl mt-28 mx-auto text-center max-w-[800px]'>
                 Coming Soon
             </p>
 
-        </RootLayout>
+        </Layout>
     )
 }
 
 export async function getStaticProps() {
-    const data = await fetchInfo();
-    const libInfo = data.libInfo?.[0]
+    try {
+      const data = await fetchInfo();
+      const libInfo = data?.libInfo?.[0];
   
-    const socials = await fetchSocials();
+      const socials = await fetchSocials();
   
-    return {
-      props: {
-        libInfo,
-        socials,
-      },
-
-      revalidate: 10,
-    };
-};
+      return {
+        props: {
+          libInfo: libInfo ?? null, 
+          socials: socials ?? null, 
+        },
+        revalidate: 10,
+      };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return {
+        props: {
+          libInfo: null,
+          socials: null,
+        },
+        revalidate: 10,
+      };
+    }
+  }
+  

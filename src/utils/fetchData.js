@@ -1,35 +1,50 @@
-const getBaseUrl = (req) => {
-    if (process.env.NODE_ENV === "development") {
-      return "http://localhost:3000";
-    } else {
-      return req?.headers?.host ? `https://${req.headers.host}` : "http://localhost:3000";
+export const fetchInfo = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getInfo`);
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch info");
     }
-  };
-  
-  export const fetchInfo = async (req) => {
-    const baseUrl = getBaseUrl(req);
-    const apiUrl = `${baseUrl}/api/getInfo`;
-    const res = await fetch(apiUrl);
+
     const libInfo = await res.json();
-  
     return libInfo;
-  };
-  
-  export const fetchProjects = async (req) => {
-    const baseUrl = getBaseUrl(req);
-    const apiUrl = `${baseUrl}/api/getProjects`;
-    const res = await fetch(apiUrl);
+  } catch (error) {
+    console.error("Error fetching info:", error);
+
+    return null;
+  }
+};
+
+export const fetchProjects = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getProjects`);
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch projects");
+    }
+
     const projects = await res.json();
-  
     return projects;
-  };
-  
-  export const fetchSocials = async (req) => {
-    const baseUrl = getBaseUrl(req);
-    const apiUrl = `${baseUrl}/api/getSocials`;
-    const res = await fetch(apiUrl);
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+
+    return null;
+  }
+};
+
+export const fetchSocials = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getSocials`);
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch socials");
+    }
+
     const socials = await res.json();
-  
     return socials;
-  };
-  
+  } catch (error) {
+    console.error("Error fetching socials:", error);
+
+    return null;
+  }
+};
