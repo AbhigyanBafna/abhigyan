@@ -14,11 +14,17 @@ export default function App({ Component, pageProps }) {
   const pathname = usePathname()
   const isHome = pathname === '/'
   const [introRun, setIntroRun] = useState(false);
+  let title = metadata.title.default
+  
+  if(!isHome){
+    var secondChar = pathname?.charAt(1).toUpperCase();
+    title = secondChar + pathname?.slice(2) + ' | ' + title;
+  }
 
   return (
     <>
     <Head>
-      <title>{metadata.title.default}</title>
+      <title>{`${title}`}</title>
     </Head>
     <div className="bg-background text-pText h-screen overflow-x-hidden">
 

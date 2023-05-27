@@ -1,4 +1,5 @@
 import Parser from 'html-react-parser';
+
 export const name = 'Abhigyan Bafna';
 
 export const hero = () => {
@@ -21,22 +22,15 @@ export const info = (info) => {
 export const metadata = {
   title: {
     default: 'Abhigyan Bafna',
-    template: '%s | Abhigyan Bafna',
   },
-  description: 'Developer, Movie Buff, Technophile, Personal Finance',
+  description: 'Developer, movie-buff and creator.',
   openGraph: {
     title: 'Abhigyan Bafna',
-    description: 'Developer, Movie Buff and Technophile.',
-    url: 'https://abhigyan.vercel.app',
+    description: 'Code. Coffee. Marvel.',
+    url: 'https://abhigyan.tech',
     siteName: 'Abhigyan Bafna',
-    images: [
-      {
-        url: 'https://abhigyan.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FprofilePic.dddb8b02.jpg&w=384&q=75',
-        width: 1920,
-        height: 1080,
-      },
-    ],
-    locale: 'en-US',
+    image: 'https://abhigyan.tech/meta_Image.png',
+    locale: 'en-IN',
     type: 'website',
   },
   robots: {
@@ -53,8 +47,14 @@ export const metadata = {
   twitter: {
     title: 'Abhigyan Bafna',
     card: 'summary_large_image',
+    description: 'Code. Coffee. Marvel.',
+    site: "@Abhigyan_Bafna",
+    image: 'https://abhigyan.tech/meta_Image.png',
+    image_alt: "The letters a and b",
+    creator: "Abhigyan Bafna",
+    domain: 'https://abhigyan.tech',
   },
   icons: {
-    shortcut: '/AB_light.ico',
+    shortcut: 'https://abhigyan.tech/AB_light.ico',
   },
 };
