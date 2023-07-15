@@ -1,13 +1,13 @@
-export const fetchInfo = async () => {
+export const fetchProfile = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getInfo`);
+    const res = await fetch(`http://localhost:3000/api/getProfile`);
 
     if (!res.ok) {
-      throw new Error("Failed to fetch info");
+      throw new Error("Failed to fetch info, response !ok");
     }
 
-    const libInfo = await res.json();
-    return libInfo;
+    const profile = await res.json();
+    return profile;
   } catch (error) {
     console.error("Error fetching info:", error);
 

@@ -1,17 +1,17 @@
 import Image from 'next/image'
-import { hero, info } from '@/lib/info'
-import Layout from '../utils/layout'
+import { hero, htmlFormatter } from '@/lib/info'
+import Layout from '../components/layout'
 import { motion } from 'framer-motion'
-import { fetchInfo, fetchSocials } from '@/utils/fetchData';
+import { fetchSocials, fetchProfile } from '@/utils/fetchData';
 import { urlFor } from '@/utils/sanityUtils';
 
-export default function Home({ libInfo, links }) {
+export default function Home({ profile, links }) {
   
   return (
-    <Layout email={libInfo?.email} socials={links}>
+    <Layout email={profile?.email} socials={links}>
 
       <p className='p-2 text-2xl md:text-3xl mt-12 md:mt-16 mx-auto text-center max-w-[800px]'>
-        { hero() }
+        { hero(profile?.profession) }
       </p>
 
       <motion.div
@@ -20,7 +20,7 @@ export default function Home({ libInfo, links }) {
         transition={{ duration: 1 }} 
       >
         <Image
-        src={urlFor(libInfo?.profilePic).url()}
+        src={urlFor(profile?.profilePic).url()}
         alt='Profile Picture'
         width={180}
         height={180}
@@ -29,7 +29,7 @@ export default function Home({ libInfo, links }) {
       </motion.div>
       
       <p className='p-6 md:p-1 mt-10 text-lg md:text-xl text-center mx-auto max-w-[800px]'>
-        { info(libInfo?.bio) }
+        { htmlFormatter(profile?.homeText) }
       </p>
 
     </Layout>
@@ -37,14 +37,15 @@ export default function Home({ libInfo, links }) {
 }
 
 export async function getStaticProps() {
+
   try {
-    const data = await fetchInfo();
-    const libInfo = data?.libInfo?.[0];
+    const rawProfile = await fetchProfile();
+    const profile = rawProfile.profile;
     const links = await fetchSocials();
 
     return {
       props: {
-        libInfo: libInfo ?? null, 
+        profile: profile ?? null, 
         links: links ?? null,
       },
       revalidate: 10,
@@ -53,7 +54,7 @@ export async function getStaticProps() {
     console.error("Error fetching data:", error);
     return {
       props: {
-        libInfo: null,
+        profile: null,
         links: null,
       },
       revalidate: 10,

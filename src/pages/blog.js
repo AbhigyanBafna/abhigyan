@@ -1,18 +1,20 @@
-import Layout from '../utils/layout'
-import { fetchInfo, fetchSocials } from '@/utils/fetchData';
+import Layout from '../components/layout'
+import { fetchProfile, fetchSocials } from '@/utils/fetchData';
 import { groq } from 'next-sanity';
 import { PreviewSuspense } from 'next-sanity/preview';
 import PreviewBlogList from '@/components/PreviewBlogList';
+import BlogList from '@/components/BlogList';
+import { client } from '@/utils/sanityUtils';
+
 
 const query = groq`
   *[_type=='post'] {
     ...,
-    author->,
     categories[]->,
   } | order(_createdAt desc)
 `;
 
-export default function Blog( {libInfo, socials, previewMode} ) {
+export default function Blog( {profile, links, previewMode, Userposts} ) {
 
   if( previewMode ){
     return(
@@ -24,18 +26,24 @@ export default function Blog( {libInfo, socials, previewMode} ) {
         </div>
       )}>
 
-        < PreviewBlogList query={query}/>
+        <Layout email={profile?.email} socials={links}>
+
+          <p className='text-3xl mt-28 mx-auto text-center max-w-[800px]'>
+            < PreviewBlogList query={query}/>
+          </p>
+
+        </Layout>
 
       </PreviewSuspense>
     )
   }
 
     return(
-        <Layout email={libInfo?.email} socials={socials}>
+        <Layout email={profile?.email} socials={links}>
 
-            <p className='text-3xl mt-28 mx-auto text-center max-w-[800px]'>
-                Coming Soon
-            </p>
+            <div className='text-3xl mt-28 mx-auto text-center max-w-[800px]'>
+                <BlogList posts ={Userposts}/>
+            </div>
 
         </Layout>
     )
@@ -43,17 +51,18 @@ export default function Blog( {libInfo, socials, previewMode} ) {
 
 export async function getStaticProps(context) {
     try {
-      const data = await fetchInfo();
-      const libInfo = data?.libInfo?.[0];
+      const rawProfile = await fetchProfile();
+      const profile = rawProfile.profile;
+      const links = await fetchSocials();
       const previewMode = context.preview === true;
-  
-      const socials = await fetchSocials();
+      const Userposts = await client.fetch(query);
   
       return {
         props: {
-          libInfo: libInfo ?? null, 
-          socials: socials ?? null, 
+          profile: profile ?? null, 
+          links: links ?? null,
           previewMode,
+          Userposts
         },
         revalidate: 10,
       };
@@ -61,11 +70,12 @@ export async function getStaticProps(context) {
       console.error("Error fetching data:", error);
       return {
         props: {
-          libInfo: null,
-          socials: null,
+          profile: null,
+          links: null,
         },
         revalidate: 10,
       };
     }
   }
+
   

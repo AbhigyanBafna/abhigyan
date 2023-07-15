@@ -1,11 +1,11 @@
 import ProjectsContainer from '@/components/ProjectsContainer'
-import Layout from '../utils/layout'
-import { fetchInfo, fetchProjects, fetchSocials } from '@/utils/fetchData';
+import Layout from '../components/layout'
+import { fetchProfile, fetchProjects, fetchSocials } from '@/utils/fetchData';
 
-export default function Projects( {libInfo, socials, projects} ) {
+export default function Projects( {profile, links, projects} ) {
     
     return(
-        <Layout email={libInfo?.email} socials={socials}>
+        <Layout email={profile?.email} socials={links}>
             
             <p className='text-4xl pl-3 pt-8 md:pt-0 mx-auto max-w-[800px]'>
                 <span className='text-blue-600'>Pro</span>jects
@@ -19,16 +19,16 @@ export default function Projects( {libInfo, socials, projects} ) {
 
 export async function getStaticProps() {
     try {
-      const data = await fetchInfo();
-      const libInfo = data?.libInfo?.[0];
-  
-      const socials = await fetchSocials();
+      const rawProfile = await fetchProfile();
+      const profile = rawProfile.profile;
+      const links = await fetchSocials();
+
       const projects = await fetchProjects();
   
       return {
         props: {
-          libInfo: libInfo ?? null, 
-          socials: socials ?? null, 
+          profile: profile ?? null, 
+          links: links ?? null, 
           projects: projects ?? null, 
         },
         revalidate: 10,
@@ -37,13 +37,14 @@ export async function getStaticProps() {
       console.error("Error fetching data:", error);
       return {
         props: {
-          libInfo: null,
-          socials: null,
+          profile: null,
+          links: null,
           projects: null,
         },
         revalidate: 10,
       };
     }
   }
+  
   
 

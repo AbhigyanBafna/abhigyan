@@ -1,17 +1,15 @@
 import Parser from 'html-react-parser';
 
-export const name = 'Abhigyan Bafna';
-
-export const hero = () => {
+export const hero = (profession) => {
   return (
     <>
-        Hey, I&apos;m <span className='text-pHighlight'> Abhigyan</span>, a passionate Web Developer
+        Hey, I&apos;m <span className='text-pHighlight'> Abhigyan</span>, a passionate &nbsp;{profession}&nbsp;
         who&apos;s curious about <span className='underline text-pHighlight'> AI. </span>
     </>
   );
 };
 
-export const info = (info) => {
+export const htmlFormatter = (info) => {
   if (info === null || info === undefined) {
     return <>No information available</>;
   }

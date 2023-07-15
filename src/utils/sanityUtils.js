@@ -1,16 +1,29 @@
-const { createClient } = require('@sanity/client');
-const imageUrlBuilder = require('@sanity/image-url');
+import { createClient } from '@sanity/client';
+import imageUrlBuilder from '@sanity/image-url';
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const dataset = 'production';
+export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+export const dataset = 'production';
 
-const client = createClient({
+export const client = createClient({
   projectId: projectId,
   dataset: dataset,
   apiVersion: '2023-05-21',
   useCdn: false
 });
 
-const urlFor = source => imageUrlBuilder(client).image(source);
+export const urlFor = source => imageUrlBuilder(client).image(source);
 
-module.exports = { client, urlFor };
+export function overlayDrafts(docs) {
+  const documents = docs || []
+  const overlayed = documents.reduce((map, doc) => {
+    if (!doc._id) {
+      throw new Error('Ensure that `_id` is included in query projection')
+    }
+
+    const isDraft = doc._id.startsWith('drafts.')
+    const id = isDraft ? doc._id.slice(7) : doc._id
+    return isDraft || !map.has(id) ? map.set(id, doc) : map
+  }, new Map())
+
+  return Array.from(overlayed.values())
+}

@@ -29,7 +29,8 @@ export default function App({ Component, pageProps }) {
     <div className="bg-background text-pText h-screen overflow-x-hidden">
 
       <AnimatePresence mode='wait'>
-        {!introRun && isHome ? (
+        {/* !introRun && isHome */}
+        {false ? (
           <motion.div
           variants={splashVariants.heroContainer}
           animate={"animate"}

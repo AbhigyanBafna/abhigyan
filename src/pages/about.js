@@ -1,12 +1,12 @@
-import { info } from '@/lib/info'
+import { htmlFormatter } from '@/lib/info'
 import { ArrowIcon, FileIcon } from "@/lib/icons";
-import Layout from '../utils/layout'
-import { fetchInfo, fetchSocials } from '@/utils/fetchData';
+import Layout from '../components/layout'
+import { fetchProfile, fetchSocials } from '@/utils/fetchData';
 
-export default function About( {libInfo, socials} ) {
+export default function About( {profile, links} ) {
 
     return(
-        <Layout email={libInfo?.email} socials={socials}>
+        <Layout email={profile?.email} socials={links}>
 
             <div className='mx-auto max-w-[800px] pr-4 pl-4'>
 
@@ -15,18 +15,18 @@ export default function About( {libInfo, socials} ) {
                 </p>
 
                 <p className='text-lg'>
-                    { info(libInfo?.about1) }
+                    { htmlFormatter(profile?.about1) }
                 </p>
 
                 <hr className='w-full mx-0 m-16 border-red-500' />
 
                 <p className='text-lg mt-16'>
-                    { info(libInfo?.about2) }
+                    { htmlFormatter(profile?.about2) }
                 </p>
 
                 <div className="pt-8 flex flex-col gap-3 md:flex-row md:gap-2">
                     
-                    <a rel="noopener noreferrer" target="_blank" href={libInfo?.resume} className="flex w-2/3 md:w-1/2 mx-auto pr-4 border border-neutral-700 rounded-lg items-center text-neutral-200 hover:bg-neutral-900 transition-all justify-between">
+                    <a rel="noopener noreferrer" target="_blank" href={profile?.resume} className="flex w-2/3 md:w-1/2 mx-auto pr-4 border border-neutral-700 rounded-lg items-center text-neutral-200 hover:bg-neutral-900 transition-all justify-between">
 
                         <div className="flex items-center p-5">
                             <FileIcon />
@@ -45,28 +45,27 @@ export default function About( {libInfo, socials} ) {
 }
 
 export async function getStaticProps() {
-    try {
-      const data = await fetchInfo();
-      const libInfo = data?.libInfo?.[0];
-  
-      const socials = await fetchSocials();
-  
-      return {
-        props: {
-          libInfo: libInfo ?? null, 
-          socials: socials ?? null,
-        },
-        revalidate: 10,
-      };
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      return {
-        props: {
-          libInfo: null,
-          socials: null, 
-        },
-        revalidate: 10,
-      };
-    }
+  try {
+    const rawProfile = await fetchProfile();
+    const profile = rawProfile.profile;
+    const links = await fetchSocials();
+
+    return {
+      props: {
+        profile: profile ?? null, 
+        links: links ?? null,
+      },
+      revalidate: 10,
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      props: {
+        profile: null,
+        links: null,
+      },
+      revalidate: 10,
+    };
   }
+}
   
