@@ -14,20 +14,15 @@ export default defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      hidden: false,
       options: {
         source: 'title',
         maxLength: 96,
       },
     }),
     defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: {type: 'author'},
-    }),
-    defineField({
-      name: 'mainImage',
-      title: 'Main image',
+      name: 'banner',
+      title: 'Banner',
       type: 'image',
       options: {
         hotspot: true,
@@ -42,7 +37,11 @@ export default defineType({
     defineField({
       name: 'publishedAt',
       title: 'Published at',
-      type: 'datetime',
+      type: 'date',
+      options: {
+        dateFormat: 'DD-MM-YYYY',
+
+      }
     }),
     defineField({
       name: 'body',
@@ -54,12 +53,11 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
       media: 'mainImage',
     },
-    prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
-    },
+    // prepare(selection) {
+    //   const {author} = selection
+    //   return {...selection, subtitle: author && `by ${author}`}
+    // },
   },
 })
