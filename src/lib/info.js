@@ -56,3 +56,12 @@ export const metadata = {
     shortcut: 'https://abhigyan.tech/AB_light.ico',
   },
 };
+
+export const sanityConfig = {
+  dataset: 'production',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  useCdn:
+    typeof document !== 'undefined' && process.env.NODE_ENV === 'production',
+    //Server side document will be undefined and hence will return false.
+  apiVersion: '2023-05-21',
+}

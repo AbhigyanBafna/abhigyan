@@ -14,3 +14,10 @@ export const projectsQuery = groq`
 export const socialsQuery = groq`
     *[_type == "social"]
 `
+
+export const postsQuery = groq`
+  *[_type=='post'] {
+    ...,
+    categories[]->,
+  } | order(_createdAt desc)
+`;

@@ -3,7 +3,7 @@ import { hero, htmlFormatter } from '@/lib/info'
 import Layout from '../components/layout'
 import { motion } from 'framer-motion'
 import { fetchSocials, fetchProfile } from '@/utils/fetchData';
-import { urlFor } from '@/utils/sanityUtils';
+import { urlFor } from '@/utils/sanity';
 
 export default function Home({ profile, links }) {
   

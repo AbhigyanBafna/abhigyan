@@ -35,12 +35,11 @@ export default defineType({
       of: [{type: 'reference', to: {type: 'category'}}],
     }),
     defineField({
-      name: 'publishedAt',
-      title: 'Published at',
+      name: 'date',
+      title: 'Date Created',
       type: 'date',
       options: {
         dateFormat: 'DD-MM-YYYY',
-
       }
     }),
     defineField({

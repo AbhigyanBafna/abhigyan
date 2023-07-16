@@ -1,5 +1,5 @@
 import { ArrowIcon } from '@/lib/icons';
-import { urlFor } from '@/utils/sanityUtils';
+import { urlFor } from '@/utils/sanity';
 import Image from 'next/image';
 
 
