@@ -12,7 +12,7 @@ export default function Blog( {profile, links, previewMode, allPosts} ) {
     return(
       <PreviewSuspense fallback={(
         <div role='status'>
-          <p className='text-center text-2xl animate-pulse text-pHighlight'>
+          <p className='text-center justify-center items-center text-2xl animate-pulse text-pHighlight'>
             Loading Preview Data...
           </p>
         </div>
@@ -20,7 +20,7 @@ export default function Blog( {profile, links, previewMode, allPosts} ) {
 
         <Layout email={profile?.email} socials={links}>
 
-          <p className='text-2xl mx-auto max-w-[800px]'>
+          <p className='text-xl ml-4 mr-4 mt-5 mb-5 sm:max-w-[800px] overflow-hidden sm:mx-auto sm:text-2xl sm:mt-0'>
             <BlogList posts ={allPosts}/>
           </p>
 
@@ -33,7 +33,7 @@ export default function Blog( {profile, links, previewMode, allPosts} ) {
     return(
         <Layout email={profile?.email} socials={links}>
 
-            <div className='text-3xl mt-28 mx-auto text-center max-w-[800px]'>
+            <div className='text-xl ml-4 mr-4 mt-5 mb-5 sm:max-w-[800px] overflow-hidden sm:mx-auto sm:text-2xl sm:mt-0'>
                 <BlogList posts ={allPosts}/>
             </div>
 

@@ -4,16 +4,20 @@
 
 @font-face {
     font-family: 'Raleway';
-    src: url('/fonts/Raleway/Raleway.ttf') format('truetype');
-    font-weight: 300;
+    src: url('/fonts/Raleway/Raleway-Light.ttf') format('truetype');
     font-style: normal;
 }
-  
-  @font-face {
-    font-family: 'Raleway';
-    src: url('/fonts/Raleway/Raleway.ttf') format('truetype');
-    font-weight: 600;
-    font-style: normal;
+
+@font-face {
+  font-family: 'Raleway-Semibold';
+  src: url('/fonts/Raleway/Raleway-Medium.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('/fonts/Lato/Lato-Light.ttf') format('truetype');
+  font-style: normal;
 }
 
 .image-fade-out {

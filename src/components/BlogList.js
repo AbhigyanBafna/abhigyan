@@ -24,24 +24,53 @@ export default function BlogList({ posts }) {
         <button
           key={i}
           onClick={() => goToPage(i)}
-          className={i === currentPage ? 'active' : ''}
+          className={i === currentPage ? 'active text-pHighlight' : 'hover:text-pHighlight'}
         >
-            {i}&nbsp;&nbsp;
+            {i}&nbsp;&nbsp;&nbsp;
         </button>
       );
     }
     return buttons;
   };
 
+  //Date Formatting.
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+  
+    let daySuffix;
+    if (day >= 11 && day <= 13) {
+      daySuffix = 'th';
+    } else {
+      switch (day % 10) {
+        case 1:
+          daySuffix = 'st';
+          break;
+        case 2:
+          daySuffix = 'nd';
+          break;
+        case 3:
+          daySuffix = 'rd';
+          break;
+        default:
+          daySuffix = 'th';
+      }
+    }
+  
+    return `${day}${daySuffix} ${month},\u00A0\u00A0${year}`;
+  };
+
   return (
     <div>
       {currentPosts.map(post => (
         <div key={post._id} className='mb-4'>
-          <h2>{post.title}</h2>
-          <p className="text-[20px]">{post.date}</p>
+          <p className="text-[75%] font-nums text-pHighlight">{formatDate(post.date)}</p>
+          <h2 className='font-sansM'>{post.title}</h2>
         </div>
       ))}
-      <div className="page-navigation">
+      <div className="mt-7 text-2xl font-nums w-full flex justify-center sm:justify-start">
         {renderPageButtons()}
       </div>
     </div>

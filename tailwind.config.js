@@ -20,6 +20,8 @@ module.exports = {
       colors: myColors,
       fontFamily: {
         'sans': ['Raleway', 'sans-serif'],
+        'nums': ['Lato', 'sans-serif'],
+        'sansM': ['Raleway-Semibold', 'sans-serif'],
       },
     },
   },
