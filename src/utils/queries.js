@@ -18,6 +18,10 @@ export const socialsQuery = groq`
 export const postsQuery = groq`
   *[_type=='post'] {
     ...,
-    categories[]->,
+    tags[]->,
   } | order(_createdAt desc)
+`;
+
+export const tagsQuery = groq`
+*[_type=='tag'] | order(title asc)
 `;
