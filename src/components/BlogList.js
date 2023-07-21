@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 export default function BlogList({ posts }) {
@@ -66,8 +67,16 @@ export default function BlogList({ posts }) {
     <div>
       {currentPosts.map(post => (
         <div key={post._id} className='mb-4'>
-          <p className="text-[75%] font-nums text-pHighlight">{formatDate(post.date)}</p>
-          <h2 className='font-sansM'>{post.title}</h2>
+          <p className="text-[75%] font-nums text-sText">
+            {formatDate(post.date)}
+          </p>
+            <Link
+              className='font-sansM text-neutral-200'
+              href="/blog/posts/[slug]"
+              as={`/blog/posts/${post.slug.current}`}
+            >
+              {post.title}
+            </Link>
         </div>
       ))}
       <div className="mt-7 text-2xl font-nums w-full flex justify-center sm:justify-start">

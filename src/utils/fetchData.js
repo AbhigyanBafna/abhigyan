@@ -6,12 +6,13 @@ export const fetchProfile = async () => {
       throw new Error("Failed to fetch info, response !ok");
     }
 
-    const profile = await res.json();
-    return profile;
+    const rawProfile = await res.json();
+    return rawProfile?.profile;
   } catch (error) {
-    console.error("Error fetching info:", error);
 
+    console.error("Error fetching info:", error);
     return null;
+    
   }
 };
 

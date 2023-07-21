@@ -46,8 +46,7 @@ export default function About( {profile, links} ) {
 
 export async function getStaticProps() {
   try {
-    const rawProfile = await fetchProfile();
-    const profile = rawProfile.profile;
+    const profile = await fetchProfile();
     const links = await fetchSocials();
 
     return {

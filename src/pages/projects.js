@@ -19,8 +19,7 @@ export default function Projects( {profile, links, projects} ) {
 
 export async function getStaticProps() {
     try {
-      const rawProfile = await fetchProfile();
-      const profile = rawProfile.profile;
+      const profile = await fetchProfile();
       const links = await fetchSocials();
 
       const projects = await fetchProjects();
