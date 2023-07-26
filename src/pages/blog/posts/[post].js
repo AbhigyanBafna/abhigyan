@@ -2,11 +2,12 @@ import { postQuery, slugsQuery, socialsQuery, stringSlugsQuery } from '@/utils/q
 import { sanityClient } from '@/utils/sanityServer';
 import {PortableText} from '@portabletext/react'
 import { RichTextComponents } from '@/components/RichTextComponents';
-import PostLayout from '@/components/postLayout';
+
 import { formatDate } from '@/utils/generalUtils';
 import Tags from '@/components/Tags';
 import SocialLinks from '@/components/SocialLinks';
 import { revalidationNum } from '@/lib/info';
+import PostLayout from '@/components/PostLayout';
 
 export default function post( {post, nextSlug, links} ) {
 
