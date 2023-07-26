@@ -2,6 +2,7 @@ import Layout from '@/components/layout';
 import { postsByTagQuery, profileQuery, socialsQuery, tagsQuery } from '@/utils/queries';
 import BlogList from '@/components/BlogList';
 import { sanityClient } from '@/utils/sanityServer';
+import { revalidationNum } from '@/lib/info';
 
 export default function Blog( {profile, links, tagPosts, currentTag} ) {
 
