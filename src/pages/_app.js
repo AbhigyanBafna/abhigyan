@@ -17,8 +17,11 @@ export default function App({ Component, pageProps }) {
   let title = metadata.title.default
   
   if(!isHome){
-    var secondChar = pathname?.charAt(1).toUpperCase();
-    title = secondChar + pathname?.slice(2) + ' | ' + title;
+    const firstSlashIndex = pathname?.indexOf('/');
+    const targetIndex = pathname?.indexOf('/', firstSlashIndex + 1);
+    const titleFromPathname = targetIndex !== -1 ? pathname?.slice(1, targetIndex) : "AB";
+    const capitalizedTitle = titleFromPathname?.charAt(0).toUpperCase() + titleFromPathname?.slice(1);
+    title = capitalizedTitle + ' | ' + title;
   }
 
   return (
@@ -29,8 +32,7 @@ export default function App({ Component, pageProps }) {
     <div className="bg-background text-pText h-screen overflow-x-hidden">
 
       <AnimatePresence mode='wait'>
-        {/* !introRun && isHome */}
-        {false ? (
+        {!introRun && isHome ? (
           <motion.div
           variants={splashVariants.heroContainer}
           animate={"animate"}

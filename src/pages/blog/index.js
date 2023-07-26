@@ -1,29 +1,35 @@
 import Layout from '../../components/layout'
-import { fetchProfile, fetchSocials } from '@/utils/fetchData';
-import { getClient } from '@/utils/sanityServer';
-import { tagsQuery } from '@/utils/queries';
+import { sanityClient } from '@/utils/sanityServer';
+import { profileQuery, socialsQuery, stringSlugsQuery, tagsQuery } from '@/utils/queries';
 import { ArrowIcon } from '@/lib/icons';
 import Tags from '@/components/Tags';
+import { revalidationNum } from '@/lib/info';
 
+export default function Blog( {profile, links, allTags, allSlugs} ) {
 
-export default function Blog( {profile, links, allTags} ) {
+  const getRandomSlug = () => {
+    const randomIndex = Math.floor(Math.random() * allSlugs.length);
+    return allSlugs[randomIndex];
+  };
+
+  let randomSlug = getRandomSlug();
 
     return(
-      <Layout email={profile?.email} socials={links}>
+      <Layout email={profile?.email} links={links}>
           
-        <div className='mx-auto text-center h-full max-w-[800px]'>
+        <div className='mx-auto text-center md:max-w-[800px]'>
 
-          <h1 className='text-4xl md:text-5xl md:mt-24'>
+          <h1 className='text-4xl mt-20 md:text-5xl md:mt-24'>
             Hey, welcome to <span className='text-pHighlight'>Arcane</span>.
           </h1>
 
-          <p className='mt-7 text-lg md:text-xl'>
+          <p className='mt-7 mx-10 text-lg md:text-xl'>
             Scripting the chronicle of my life, one blog at a time.
           </p>
 
-          <div className="pt-14 flex flex-row gap-3 justify-center mb-5">
+          <div className="my-7 flex flex-row gap-3 justify-center">
                     
-            <a rel="noopener noreferrer" href={"/blog/posts"} className="flex w-1/6 border border-neutral-700 rounded-lg items-center text-pHighlight hover:bg-pText hover:text-background transition-all ">
+            <a rel="noopener noreferrer" href={"/blog/posts"} className="flex md:w-1/6 border border-neutral-700 rounded-lg items-center text-pHighlight hover:bg-pText hover:text-background transition-all ">
 
               <div className="flex items-center mx-auto p-2">
                 <ArrowIcon />
@@ -32,7 +38,7 @@ export default function Blog( {profile, links, allTags} ) {
                 
             </a>
 
-            <a rel="noopener noreferrer" target="_blank" href={profile?.resume} className="flex w-1/6 border border-neutral-700 rounded-lg items-center text-neutral-200 hover:bg-pText hover:text-background transition-all ">
+            <a rel="noopener noreferrer" href={`/blog/posts/${randomSlug}`} className="flex md:w-1/6 border border-neutral-700 rounded-lg items-center text-neutral-200 hover:bg-pText hover:text-background transition-all ">
 
               <div className="flex items-center mx-auto p-2">
                 <ArrowIcon />
@@ -51,8 +57,8 @@ export default function Blog( {profile, links, allTags} ) {
 
           </div>
 
-          <div className='mt-5'>
-            <Tags Tags={allTags} />
+          <div className='my-5'>
+            <Tags Tags={allTags}  />
           </div>
           
           </div>
@@ -62,18 +68,21 @@ export default function Blog( {profile, links, allTags} ) {
 }
 
 export async function getStaticProps() {
+
   try {
-    const profile = await fetchProfile();
-    const links = await fetchSocials();
-    const allTags =  await getClient(false).fetch(tagsQuery);
+    const profile = await sanityClient.fetch(profileQuery);
+    const links = await sanityClient.fetch(socialsQuery);
+    const allTags =  await sanityClient.fetch(tagsQuery);
+    const allSlugs = await sanityClient.fetch(stringSlugsQuery);
 
     return {
       props: {
         profile: profile ?? null, 
         links: links ?? null,
-        allTags
+        allTags: allTags ?? null,
+        allSlugs: allSlugs ?? null,
       },
-      revalidate: 10,
+      revalidate: revalidationNum,
     };
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -81,10 +90,10 @@ export async function getStaticProps() {
         props: {
           profile: null,
           links: null,
+          allTags: null,
+          allSlugs: null,
         },
-        revalidate: 10,
+        revalidate: revalidationNum,
       };
   }
-}
-
-  
+}  

@@ -8,7 +8,7 @@ export default function SocialLinks( {links} ) {
             <div className='hidden md:block'>
                 <div className="fixed bottom-28 left-9 flex flex-col space-y-[-15px]">
 
-                    {links?.socials.map((social) => (
+                    {links?.map((social) => (
 
                     <AnimatedSocialIcon
                         key={social?._id}
@@ -31,7 +31,7 @@ export default function SocialLinks( {links} ) {
 
             <div className='flex justify-center items-center mx-auto space-x-4 md:hidden'>
                     
-                {links?.socials.map((social) => (
+                {links?.map((social) => (
                     
                     <div key={social?._id}>
 

@@ -1,11 +1,13 @@
 import ProjectsContainer from '@/components/ProjectsContainer'
 import Layout from '../components/layout'
-import { fetchProfile, fetchProjects, fetchSocials } from '@/utils/fetchData';
+import { sanityClient } from '@/utils/sanityServer';
+import { profileQuery, projectsQuery, socialsQuery } from '@/utils/queries';
+import { revalidationNum } from '@/lib/info';
 
 export default function Projects( {profile, links, projects} ) {
     
     return(
-        <Layout email={profile?.email} socials={links}>
+        <Layout email={profile?.email} links={links}>
             
             <p className='text-4xl pl-3 pt-8 md:pt-0 mx-auto max-w-[800px]'>
                 <span className='text-blue-600'>Pro</span>jects
@@ -18,32 +20,32 @@ export default function Projects( {profile, links, projects} ) {
 }
 
 export async function getStaticProps() {
-    try {
-      const profile = await fetchProfile();
-      const links = await fetchSocials();
 
-      const projects = await fetchProjects();
-  
-      return {
-        props: {
-          profile: profile ?? null, 
-          links: links ?? null, 
-          projects: projects ?? null, 
-        },
-        revalidate: 10,
-      };
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      return {
-        props: {
-          profile: null,
-          links: null,
-          projects: null,
-        },
-        revalidate: 10,
-      };
-    }
+  try {
+    const profile = await sanityClient.fetch(profileQuery);
+    const links = await sanityClient.fetch(socialsQuery);
+    const projects = await sanityClient.fetch(projectsQuery);
+
+    return {
+      props: {
+        profile: profile ?? null, 
+        links: links ?? null, 
+        projects: projects ?? null, 
+      },
+      revalidate: revalidationNum,
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      props: {
+        profile: null,
+        links: null,
+        projects: null,
+      },
+      revalidate: revalidationNum,
+    };
   }
+}
   
   
 

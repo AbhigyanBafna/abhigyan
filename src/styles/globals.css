@@ -24,3 +24,8 @@
   filter: none;
   transition: filter 0.5s ease-out;
 }
+
+body {
+  @apply bg-background
+}
+

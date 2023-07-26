@@ -21,6 +21,7 @@ export const defaultDocumentNode = function (S, { schemaType }) {
                 },
                 //Optional to pass attributes to iFrame.
                 attributes: {},
+                
             })
             .title("Preview")
         ]);

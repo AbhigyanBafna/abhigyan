@@ -2,13 +2,12 @@ import { ArrowIcon } from '@/lib/icons';
 import { urlFor } from '@/utils/sanity';
 import Image from 'next/image';
 
-
 export default function Projects( {projects}) {
 
     return(
         <div className="w-full max-w-[800px] mx-auto p-3 flex overflow-x-scroll overflow-y-hidden scrollbar-thin scrollbar-track-sText/20 scrollbar-thumb-blue-700 space-x-4" >
 
-            {projects?.projects.map(project => { 
+            {projects?.map( (project) => { 
                 return(
 
                     <div key={project?._id} className="max-w-[20rem] min-w-[20rem] h-[30rem] border border-gray-700 rounded-lg mx-auto flex flex-col justify-between">
@@ -41,7 +40,7 @@ export default function Projects( {projects}) {
                                     ))}
                                 </div>
 
-                                <p className="mb-3 font-normal text-gray-400">{project?.bio}</p>
+                                <p className="mb-3 text-gray-400">{project?.bio}</p>
                             </div>
 
                             <a

@@ -19,9 +19,32 @@ export const postsQuery = groq`
   *[_type=='post'] {
     ...,
     tags[]->,
-  } | order(_createdAt desc)
+  } | order(date desc)
 `;
 
-export const tagsQuery = groq`
-*[_type=='tag'] | order(title asc)
+export const postsByTagQuery = (tag) => `
+*[_type == "post" && "${tag}" in tags[]->title]
 `;
+
+export const postQuery = (slug) => groq`
+  *[_type=='post' && slug.current == '${slug}'][0]
+  {
+    ...,
+    tags[]->
+  }
+`
+
+export const tagsQuery = groq`
+*[_type=='tag'].title
+`;
+
+export const stringSlugsQuery = groq`
+*[_type == 'post'].slug.current
+`
+
+export const slugsQuery = groq`
+*[_type == 'post'] | order(date desc) {
+  "slug": slug.current
+} 
+`
+

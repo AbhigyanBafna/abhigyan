@@ -65,3 +65,5 @@ export const sanityConfig = {
     //Server side document will be undefined and hence will return false.
   apiVersion: '2023-05-21',
 }
+
+export const revalidationNum = 30;

@@ -1,16 +1,17 @@
 import Image from 'next/image'
-import { hero, htmlFormatter } from '@/lib/info'
+import { hero, htmlFormatter, revalidationNum } from '@/lib/info'
 import Layout from '../components/layout'
 import { motion } from 'framer-motion'
-import { fetchSocials, fetchProfile } from '@/utils/fetchData';
 import { urlFor } from '@/utils/sanity';
+import { profileQuery, socialsQuery } from '@/utils/queries';
+import { sanityClient } from '@/utils/sanityServer';
 
 export default function Home({ profile, links }) {
   
   return (
-    <Layout email={profile?.email} socials={links}>
+    <Layout email={profile?.email} links={links}>
 
-      <p className='p-2 text-2xl md:text-3xl mt-12 md:mt-16 mx-auto text-center max-w-[800px]'>
+      <p className='p-2 text-2xl md:text-3xl mt-12 md:mt-16 mx-auto text-center md:max-w-[800px]'>
         { hero(profile?.profession) }
       </p>
 
@@ -39,15 +40,15 @@ export default function Home({ profile, links }) {
 export async function getStaticProps() {
 
   try {
-    const profile = await fetchProfile();
-    const links = await fetchSocials();
+    const profile = await sanityClient.fetch(profileQuery);
+    const links = await sanityClient.fetch(socialsQuery);
 
     return {
       props: {
         profile: profile ?? null, 
         links: links ?? null,
       },
-      revalidate: 10,
+      revalidate: revalidationNum,
     };
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -56,7 +57,7 @@ export async function getStaticProps() {
         profile: null,
         links: null,
       },
-      revalidate: 10,
+      revalidate: revalidationNum,
     };
   }
 }

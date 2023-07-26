@@ -1,12 +1,13 @@
-import { htmlFormatter } from '@/lib/info'
+import { htmlFormatter, revalidationNum } from '@/lib/info'
 import { ArrowIcon, FileIcon } from "@/lib/icons";
 import Layout from '../components/layout'
-import { fetchProfile, fetchSocials } from '@/utils/fetchData';
+import { sanityClient } from '@/utils/sanityServer';
+import { profileQuery, socialsQuery } from '@/utils/queries';
 
 export default function About( {profile, links} ) {
 
     return(
-        <Layout email={profile?.email} socials={links}>
+        <Layout email={profile?.email} links={links}>
 
             <div className='mx-auto max-w-[800px] pr-4 pl-4'>
 
@@ -18,9 +19,9 @@ export default function About( {profile, links} ) {
                     { htmlFormatter(profile?.about1) }
                 </p>
 
-                <hr className='w-full mx-0 m-16 border-red-500' />
+                <hr className='w-full mx-0 my-12 border-red-500' />
 
-                <p className='text-lg mt-16'>
+                <p className='text-lg'>
                     { htmlFormatter(profile?.about2) }
                 </p>
 
@@ -45,16 +46,17 @@ export default function About( {profile, links} ) {
 }
 
 export async function getStaticProps() {
+
   try {
-    const profile = await fetchProfile();
-    const links = await fetchSocials();
+    const profile = await sanityClient.fetch(profileQuery);
+    const links = await sanityClient.fetch(socialsQuery);
 
     return {
       props: {
         profile: profile ?? null, 
         links: links ?? null,
       },
-      revalidate: 10,
+      revalidate: revalidationNum,
     };
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -63,7 +65,7 @@ export async function getStaticProps() {
         profile: null,
         links: null,
       },
-      revalidate: 10,
+      revalidate: revalidationNum,
     };
   }
 }

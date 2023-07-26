@@ -1,16 +1,15 @@
-import { fetchProfile, fetchSocials } from '@/utils/fetchData';
 import BlogList from '@/components/BlogList';
-import { getClient, overlayDrafts } from '@/utils/sanityServer';
-import { postsQuery} from '@/utils/queries';
+import { getClient, overlayDrafts, sanityClient } from '@/utils/sanityServer';
+import { postsQuery, profileQuery, socialsQuery} from '@/utils/queries';
 import Layout from '@/components/layout';
-
+import { revalidationNum } from '@/lib/info';
 
 export default function Blog( {profile, links, allPosts} ) {
 
     return(
-      <Layout email={profile?.email} socials={links}>
+      <Layout email={profile?.email} links={links}>
 
-        <div className='text-xl ml-4 mr-4 mt-5 mb-5 sm:max-w-[800px] overflow-hidden sm:mx-auto sm:text-2xl sm:mt-0'>
+        <div className='text-xl ml-4 mr-4 mt-5 mb-5 md:max-w-[800px] overflow-hidden md:mx-auto md:text-2xl md:mt-0'>
           <BlogList posts ={allPosts}/>
         </div>
 
@@ -19,31 +18,31 @@ export default function Blog( {profile, links, allPosts} ) {
 }
 
 export async function getStaticProps(context) {
-    try {
-      const profile = await fetchProfile();
-      const links = await fetchSocials();
-      const previewMode = context.preview === true;
-      const allPosts = overlayDrafts(await getClient(previewMode).fetch(postsQuery));
-  
-      return {
-        props: {
-          profile: profile ?? null, 
-          links: links ?? null,
-          allPosts: allPosts ?? null,
-        },
-        revalidate: 10,
-      };
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      return {
-        props: {
-          profile: null,
-          links: null,
-          allPosts: null,
-        },
-        revalidate: 10,
-      };
-    }
+  try {
+    const profile = await sanityClient.fetch(profileQuery);
+    const links = await sanityClient.fetch(socialsQuery);
+    const previewMode = context.preview === true;
+    const allPosts = overlayDrafts(await getClient(previewMode).fetch(postsQuery));
+
+    return {
+      props: {
+        profile: profile ?? null, 
+        links: links ?? null,
+        allPosts: allPosts ?? null,
+      },
+      revalidate: revalidationNum,
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return {
+      props: {
+        profile: null,
+        links: null,
+        allPosts: null,
+      },
+      revalidate: revalidationNum,
+    };
   }
+}
 
   
