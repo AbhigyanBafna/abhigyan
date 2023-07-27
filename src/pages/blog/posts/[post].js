@@ -11,7 +11,7 @@ import PostLayout from '@/components/PostLayout';
 
 export default function post( {post, nextSlug, links} ) {
 
-  const tags = post.tags.map(item => item.title);
+  const tags = post?.tags?.map(item => item.title);
 
   return(
     <div className='font-nums'>

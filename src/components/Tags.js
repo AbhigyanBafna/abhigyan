@@ -6,7 +6,7 @@ export default function Tags( {Tags} ) {
   return (
     <div className="flex flex-row gap-3 md:w-[400px] justify-center mx-auto flex-wrap">
 
-      {Tags.map(Tag => (
+      {Tags?.map(Tag => (
         <div key={Tag} className=''>
                     
           <Link 
