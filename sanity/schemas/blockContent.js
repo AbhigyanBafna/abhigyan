@@ -74,5 +74,28 @@ export default defineType({
       type: 'image',
       options: {hotspot: true},
     }),
+    defineArrayMember({
+      type: 'object',
+      name: 'embed',
+      title: 'Embed',
+      fields: [
+        {
+          type: 'url',
+          name: 'url',
+          title: 'URL',
+        },
+        {
+          type: 'boolean',
+          name: 'isTweet',
+          title: 'Tweet Embed',
+        },
+        {
+          type: 'string',
+          name: 'tweetId',
+          title: 'Tweet ID',
+          hidden: ({ parent }) => !parent.isTweet,
+        },
+      ],
+    }),
   ],
 })

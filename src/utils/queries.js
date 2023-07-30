@@ -27,7 +27,7 @@ export const postsByTagQuery = (tag) => `
 `;
 
 export const postQuery = (slug) => groq`
-  *[_type=='post' && slug.current == '${slug}'][0]
+  *[_type=='post' && slug.current == '${slug}']
   {
     ...,
     tags[]->

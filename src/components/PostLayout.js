@@ -5,7 +5,7 @@ import PostBar from './PostBar';
 
 const PostLayout = ({ children, post, nextSlug }) => {
 
-  console.log(nextSlug);
+  // console.log(nextSlug);
 
   return (
     <div>

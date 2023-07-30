@@ -20,11 +20,11 @@ export default function Blog( {profile, links, allTags, allSlugs} ) {
         <div className='mx-auto text-center md:max-w-[800px]'>
 
           <h1 className='text-4xl mt-20 md:text-5xl md:mt-24'>
-            Hey, welcome to <span className='text-pHighlight'>Arcane</span>.
+            Hey, welcome to my <span className='text-pHighlight'>Arc</span>.
           </h1>
 
           <p className='mt-7 mx-10 text-lg md:text-xl'>
-            Scripting the chronicle of my life, one blog at a time.
+            Scripting life&apos;s odesseys, one blog at a time.
           </p>
 
           <div className="my-7 flex flex-row gap-3 justify-center">

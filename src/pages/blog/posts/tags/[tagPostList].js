@@ -25,11 +25,11 @@ export async function getStaticPaths() {
       params: { tagPostList: tag },
     }));
 
-    return { paths, fallback: false };
+    return { paths, fallback: true };
   } catch (error) {
     // Handle any potential errors here
     console.error("Error fetching slugs:", error);
-    return { paths: [], fallback: false };
+    return { paths: [], fallback: true };
   }
 }
 

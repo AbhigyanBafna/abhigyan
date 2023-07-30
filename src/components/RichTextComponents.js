@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { urlFor } from "@/utils/sanity";
 import Link from "next/link";
+import { TwitterTweetEmbed } from 'react-twitter-embed';
 
  export const RichTextComponents = {
 
@@ -18,10 +19,32 @@ import Link from "next/link";
             </div>
         );
       },
+      embed: ({value}) => {
+
+        if(value.isTweet){
+
+          return(
+            <TwitterTweetEmbed
+              tweetId={value.tweetId}
+            />
+          );
+
+        }else{
+          let url;
+          if(value.url.endsWith('/')){
+            url = value.url + "embed/";
+          }else{
+            url = value.url + + '/embed/';
+          }
+
+          return <iframe width="100%" height="400" src={url} referrerpolicy="no-referrer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        }
+      
+      },
     },
     list: {
-        bullet: ({children}) => <ul className="ml-10 list-disc space-y-2">{children}</ul>,
-        number: ({children}) => <ol className="ml-10 list-decimal space-y-2">{children}</ol>,
+        bullet: ({children}) => <ul className="ml-10 list-disc space-y-2 py-3">{children}</ul>,
+        number: ({children}) => <ol className="ml-10 list-decimal space-y-2 py-3">{children}</ol>,
       },
 
     block: {

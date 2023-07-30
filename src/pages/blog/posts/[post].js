@@ -1,6 +1,6 @@
 import { postQuery, slugsQuery, socialsQuery, stringSlugsQuery } from '@/utils/queries';
-import { sanityClient } from '@/utils/sanityServer';
-import {PortableText} from '@portabletext/react'
+import { getClient, overlayDrafts, sanityClient } from '@/utils/sanityServer';
+import { PortableText } from '@portabletext/react'
 import { RichTextComponents } from '@/components/RichTextComponents';
 
 import { formatDate } from '@/utils/generalUtils';
@@ -11,28 +11,45 @@ import PostLayout from '@/components/PostLayout';
 
 export default function post( {post, nextSlug, links} ) {
 
+  if(!post?.body){
+    return(
+      <PostLayout post={post} nextSlug={nextSlug} >
+
+        <div className='px-5 md:max-w-[600px] overflow-hidden md:mx-auto flex flex-col items-center'>
+          <h1 className='text-2xl mt-20 md:mt-40'>This post does not exist</h1>
+        </div>
+
+        <SocialLinks links={links} />
+      </PostLayout>
+    );
+  }
+
   const tags = post?.tags?.map(item => item.title);
 
   return(
     <div className='font-nums'>
-        <PostLayout post={post} nextSlug={nextSlug} >
+        <PostLayout post={post} nextSlug={nextSlug}>
 
-          <div className='px-5 md:max-w-[600px] overflow-hidden md:mx-auto flex flex-col sm:ml-5'>
-          
-            <h1 className='text-4xl font-sansM pt-5 md:pt-10'>{post.title}</h1>
+          <div className='md:pl-40'>
 
-            <div className='text-sText flex flex-row py-5 justify-between'> 
-              <p className='font-nums'>{formatDate(post.date)}</p>
-              <p>Abhigyan Bafna</p>
-            </div>
+            <div className='px-5 md:max-w-[600px] overflow-hidden md:mx-auto flex flex-col sm:ml-5'>
+            
+              <h1 className='text-4xl font-sansM pt-5 md:pt-10'>{post.title}</h1>
 
-            <PortableText value={post.body} components={RichTextComponents} />
+              <div className='text-sText flex flex-row py-5 justify-between'> 
+                <p className='font-nums'>{formatDate(post.date)}</p>
+                <p>Abhigyan Bafna</p>
+              </div>
 
-            {/* Footer */}
-            <p className='text-2xl mx-auto my-6 font-sansM'>X</p>
+              <PortableText value={post.body} components={RichTextComponents} />
 
-            <div className='flex flex-wrap mb-4 text-sm md:text-md md:mb-12'>
-                <Tags Tags={tags} />
+              {/* Footer */}
+              <p className='text-2xl mx-auto my-6 font-sansM'>X</p>
+
+              <div className='flex flex-wrap mb-4 text-sm md:text-md md:mb-12'>
+                  <Tags Tags={tags} />
+              </div>
+
             </div>
 
           </div>
@@ -63,19 +80,21 @@ export async function getStaticPaths() {
       params: { post },
     }));
 
-    return { paths, fallback: false };
+    return { paths, fallback: true };
   } catch (error) {
     // Handle any potential errors here
     console.error("Error fetching slugs:", error);
-    return { paths: [], fallback: false };
+    return { paths: [], fallback: true };
   }
 }
 
-export async function getStaticProps({params}) {
+export async function getStaticProps( {params, preview} ) {
 
   try {
     const slug = params.post;
-    const post = await sanityClient.fetch(postQuery(slug));
+    const previewMode = preview === true;
+    const postArray = overlayDrafts( await getClient(previewMode).fetch(postQuery(slug)) ); //
+    const [post] = postArray;
     const links = await sanityClient.fetch(socialsQuery);
 
     // Fetch the list of slugs again to get the next slug
