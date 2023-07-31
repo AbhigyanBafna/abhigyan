@@ -17,6 +17,13 @@ export const htmlFormatter = (info) => {
   return <>{Parser(info)}</> // Render the parsed info
 };
 
+export const blogMetaData = {
+  title: 'Arc',
+  description: "Scripting life's odesseys, one blog at a time.",
+  imageUrl: 'https://abhigyan.tech/meta_Blog.png',
+  url: 'https://abhigyan.tech/blog',
+}
+
 export const metadata = {
   title: {
     default: 'Abhigyan Bafna',

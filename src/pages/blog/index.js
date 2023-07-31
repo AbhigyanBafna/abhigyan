@@ -3,7 +3,8 @@ import { sanityClient } from '@/utils/sanityServer';
 import { profileQuery, socialsQuery, stringSlugsQuery, tagsQuery } from '@/utils/queries';
 import { ArrowIcon } from '@/lib/icons';
 import Tags from '@/components/Tags';
-import { revalidationNum } from '@/lib/info';
+import { blogMetaData, revalidationNum } from '@/lib/info';
+import CustomHead from '@/components/CustomHead';
 
 export default function Blog( {profile, links, allTags, allSlugs} ) {
 
@@ -15,6 +16,8 @@ export default function Blog( {profile, links, allTags, allSlugs} ) {
   let randomSlug = getRandomSlug();
 
     return(
+      <>
+      <CustomHead title={blogMetaData.title} description={blogMetaData.description} imageUrl={blogMetaData.imageUrl} url={blogMetaData.url}/>
       <Layout email={profile?.email} links={links}>
           
         <div className='mx-auto text-center md:max-w-[800px]'>
@@ -64,6 +67,7 @@ export default function Blog( {profile, links, allTags, allSlugs} ) {
           </div>
 
       </Layout>
+      </>
     )
 }
 

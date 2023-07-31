@@ -6,13 +6,16 @@ import { RichTextComponents } from '@/components/RichTextComponents';
 import { formatDate } from '@/utils/generalUtils';
 import Tags from '@/components/Tags';
 import SocialLinks from '@/components/SocialLinks';
-import { revalidationNum } from '@/lib/info';
+import { blogMetaData, revalidationNum } from '@/lib/info';
 import PostLayout from '@/components/PostLayout';
+import CustomHead from '@/components/CustomHead';
 
 export default function post( {post, nextSlug, links} ) {
 
   if(!post?.body){
     return(
+      <>
+      <CustomHead title={blogMetaData.title} description={blogMetaData.description} imageUrl={blogMetaData.imageUrl} url={blogMetaData.url}/>
       <PostLayout post={post} nextSlug={nextSlug} >
 
         <div className='px-5 md:max-w-[600px] overflow-hidden md:mx-auto flex flex-col items-center'>
@@ -20,7 +23,9 @@ export default function post( {post, nextSlug, links} ) {
         </div>
 
         <SocialLinks links={links} />
+
       </PostLayout>
+      </>
     );
   }
 
@@ -28,6 +33,7 @@ export default function post( {post, nextSlug, links} ) {
 
   return(
     <div className='font-nums'>
+        <CustomHead title={blogMetaData.title} description={blogMetaData.description} imageUrl={blogMetaData.imageUrl} url={blogMetaData.url}/>
         <PostLayout post={post} nextSlug={nextSlug}>
 
           <div className='md:pl-40'>

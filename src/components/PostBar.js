@@ -12,7 +12,7 @@ export default function PostBar({post, nextSlug}) {
     <div className="relative z-10 mt-7 px-5 flex flex-row items-center justify-between md:mt-0 md:px-0 md:max-w-[300px] md:absolute md:flex-col md:items-start md:justify-start">
 
       <Link
-        href={'/'}
+        href={'/blog'}
         className="text-4xl md:pt-9 md:pl-9 md:text-6xl text-sText font-sans">
         ab
       </Link>
