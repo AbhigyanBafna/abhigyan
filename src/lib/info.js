@@ -17,18 +17,8 @@ export const htmlFormatter = (info) => {
   return <>{Parser(info)}</> // Render the parsed info
 };
 
-export const blogMetaData = {
-  title: 'Arc',
-  description: "Scripting life's odesseys, one blog at a time.",
-  imageUrl: 'https://abhigyan.tech/meta_Blog.png',
-  url: 'https://abhigyan.tech/blog',
-}
+export const metaData = {
 
-export const metadata = {
-  title: {
-    default: 'Abhigyan Bafna',
-  },
-  description: 'Developer, movie-buff and creator.',
   openGraph: {
     title: 'Abhigyan Bafna',
     description: 'Code. Coffee. Marvel.',
@@ -38,17 +28,7 @@ export const metadata = {
     locale: 'en-IN',
     type: 'website',
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+
   twitter: {
     title: 'Abhigyan Bafna',
     card: 'summary_large_image',
@@ -59,10 +39,33 @@ export const metadata = {
     creator: "Abhigyan Bafna",
     domain: 'https://abhigyan.tech',
   },
-  icons: {
-    shortcut: 'https://abhigyan.tech/AB_light.ico',
-  },
+
 };
+
+export const blogMetaData = {
+
+  openGraph: {
+    title: 'Arc',
+    description: "Scripting life's odesseys, one blog at a time.",
+    url: 'https://abhigyan.tech/blog',
+    siteName: 'Arc',
+    image: 'https://abhigyan.tech/meta_Blog.png',
+    locale: 'en-IN',
+    type: 'website',
+  },
+
+  twitter: {
+    title: 'Arc',
+    card: 'summary_large_image',
+    description: "Scripting life's odesseys, one blog at a time.",
+    site: "@Abhigyan_Bafna",
+    image: 'https://abhigyan.tech/meta_Blog.png',
+    image_alt: "The word Arc written in Gold",
+    creator: "Abhigyan Bafna",
+    domain: 'https://abhigyan.tech/blog',
+  },
+
+}
 
 export const sanityConfig = {
   dataset: 'production',

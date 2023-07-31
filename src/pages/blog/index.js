@@ -17,7 +17,7 @@ export default function Blog( {profile, links, allTags, allSlugs} ) {
 
     return(
       <>
-      <CustomHead title={blogMetaData.title} description={blogMetaData.description} imageUrl={blogMetaData.imageUrl} url={blogMetaData.url}/>
+      <CustomHead metadata={blogMetaData}/>
       <Layout email={profile?.email} links={links}>
           
         <div className='mx-auto text-center md:max-w-[800px]'>

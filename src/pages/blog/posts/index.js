@@ -9,7 +9,7 @@ export default function Blog( {profile, links, allPosts} ) {
 
     return(
       <>
-      <CustomHead title={blogMetaData.title} description={blogMetaData.description} imageUrl={blogMetaData.imageUrl} url={blogMetaData.url}/>
+      <CustomHead metadata={blogMetaData}/>
       <Layout email={profile?.email} links={links}>
 
         <div className='text-xl ml-4 mr-4 mt-5 mb-5 md:max-w-[800px] overflow-hidden md:mx-auto md:text-2xl md:mt-0'>

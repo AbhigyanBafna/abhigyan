@@ -1,14 +1,17 @@
 import Image from 'next/image'
-import { hero, htmlFormatter, revalidationNum } from '@/lib/info'
+import { hero, htmlFormatter, metaData, revalidationNum } from '@/lib/info'
 import Layout from '../components/layout'
 import { motion } from 'framer-motion'
 import { urlFor } from '@/utils/sanity';
 import { profileQuery, socialsQuery } from '@/utils/queries';
 import { sanityClient } from '@/utils/sanityServer';
+import CustomHead from '@/components/CustomHead';
 
 export default function Home({ profile, links }) {
   
   return (
+    <>
+    <CustomHead metadata={metaData}/>
     <Layout email={profile?.email} links={links}>
 
       <p className='p-2 text-2xl md:text-3xl mt-12 md:mt-16 mx-auto text-center md:max-w-[800px]'>
@@ -34,6 +37,7 @@ export default function Home({ profile, links }) {
       </p>
 
     </Layout>
+    </>
   )
 }
 

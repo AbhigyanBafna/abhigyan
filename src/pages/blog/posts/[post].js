@@ -15,7 +15,7 @@ export default function post( {post, nextSlug, links} ) {
   if(!post?.body){
     return(
       <>
-      <CustomHead title={blogMetaData.title} description={blogMetaData.description} imageUrl={blogMetaData.imageUrl} url={blogMetaData.url}/>
+      <CustomHead metadata={blogMetaData}/>
       <PostLayout post={post} nextSlug={nextSlug} >
 
         <div className='px-5 md:max-w-[600px] overflow-hidden md:mx-auto flex flex-col items-center'>
@@ -33,7 +33,7 @@ export default function post( {post, nextSlug, links} ) {
 
   return(
     <div className='font-nums'>
-        <CustomHead title={blogMetaData.title} description={blogMetaData.description} imageUrl={blogMetaData.imageUrl} url={blogMetaData.url}/>
+        <CustomHead metadata={blogMetaData}/>
         <PostLayout post={post} nextSlug={nextSlug}>
 
           <div className='md:pl-40'>

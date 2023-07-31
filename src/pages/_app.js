@@ -6,7 +6,7 @@ import { splashVariants } from '@/lib/framerVariants'
 import SplashScreen from '@/components/SplashScreen'
 import { usePathname } from 'next/navigation';
 import Head  from 'next/head'
-import { metadata } from '@/lib/info'
+import { metaData } from '@/lib/info'
 
 //Renders an Intro Animation when loading the website for the first time.
 export default function App({ Component, pageProps }) {
@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
   const pathname = usePathname()
   const isHome = pathname === '/'
   const [introRun, setIntroRun] = useState(false);
-  let title = metadata.title.default
+  let title = metaData.openGraph.title
   
   if(!isHome){
     const firstSlashIndex = pathname?.indexOf('/');

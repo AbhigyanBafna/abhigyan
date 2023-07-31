@@ -1,12 +1,15 @@
-import { htmlFormatter, revalidationNum } from '@/lib/info'
+import { htmlFormatter, metaData, revalidationNum } from '@/lib/info'
 import { ArrowIcon, FileIcon } from "@/lib/icons";
 import Layout from '../components/layout'
 import { sanityClient } from '@/utils/sanityServer';
 import { profileQuery, socialsQuery } from '@/utils/queries';
+import CustomHead from '@/components/CustomHead';
 
 export default function About( {profile, links} ) {
 
     return(
+      <>
+      <CustomHead metadata={metaData}/>
         <Layout email={profile?.email} links={links}>
 
             <div className='mx-auto max-w-[800px] pr-4 pl-4'>
@@ -42,6 +45,7 @@ export default function About( {profile, links} ) {
             </div>
 
         </Layout>
+      </>
     )
 }
 

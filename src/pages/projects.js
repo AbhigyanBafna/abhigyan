@@ -2,11 +2,14 @@ import ProjectsContainer from '@/components/ProjectsContainer'
 import Layout from '../components/layout'
 import { sanityClient } from '@/utils/sanityServer';
 import { profileQuery, projectsQuery, socialsQuery } from '@/utils/queries';
-import { revalidationNum } from '@/lib/info';
+import { metaData, revalidationNum } from '@/lib/info';
+import CustomHead from '@/components/CustomHead';
 
 export default function Projects( {profile, links, projects} ) {
     
     return(
+      <>
+        <CustomHead metadata={metaData}/>
         <Layout email={profile?.email} links={links}>
             
             <p className='text-4xl pl-3 pt-8 md:pt-0 mx-auto max-w-[800px]'>
@@ -16,6 +19,7 @@ export default function Projects( {profile, links, projects} ) {
             <ProjectsContainer projects={projects} />
 
         </Layout>
+      </>
     )
 }
 
