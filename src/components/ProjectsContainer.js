@@ -1,11 +1,32 @@
 import { ArrowIcon } from '@/lib/icons';
 import { urlFor } from '@/utils/sanity';
 import Image from 'next/image';
+import React, { useRef, useEffect } from 'react';
 
 export default function Projects( {projects}) {
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        const handleWheel = (e) => {
+          if (containerRef.current) {
+            containerRef.current.scrollLeft += e.deltaY;
+          }
+        };
+      
+        if (containerRef.current) {
+          containerRef.current.addEventListener('wheel', handleWheel);
+        }
+      
+        // Clean up the event listener when the component unmounts
+        return () => {
+          if (containerRef.current) {
+            containerRef.current.removeEventListener('wheel', handleWheel);
+          }
+        };
+      }, []);
 
     return(
-        <div className="w-full max-w-[800px] mx-auto p-3 flex overflow-x-scroll overflow-y-hidden scrollbar-thin scrollbar-track-sText/20 scrollbar-thumb-blue-700 space-x-4" >
+        <div className="w-full max-w-[800px] mx-auto p-3 flex overflow-x-scroll overflow-y-hidden scrollbar-thin scrollbar-track-sText/20 scrollbar-thumb-blue-700 space-x-4" ref={containerRef}>
 
             {projects?.map( (project) => { 
                 return(

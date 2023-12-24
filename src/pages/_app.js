@@ -1,6 +1,6 @@
 import '@/styles/globals.css'
 import '@/styles/Navbar.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 import { splashVariants } from '@/lib/framerVariants'
 import SplashScreen from '@/components/SplashScreen'
@@ -11,10 +11,19 @@ import { metaData } from '@/lib/info'
 //Renders an Intro Animation when loading the website for the first time.
 export default function App({ Component, pageProps }) {
   
+  const [introRun, setIntroRun] = useState(false);
+  const [showComponent, setShowComponent] = useState(false);
+
+  useEffect(() => {
+    if (introRun) {
+      // delay the rendering of the Component until the exit animation has completed
+      setTimeout(() => setShowComponent(true), 1000); // adjust the delay as needed
+    }
+  }, [introRun]);
+
+  let title = metaData.openGraph.title
   const pathname = usePathname()
   const isHome = pathname === '/'
-  const [introRun, setIntroRun] = useState(false);
-  let title = metaData.openGraph.title
   
   if(!isHome){
     const firstSlashIndex = pathname?.indexOf('/');
@@ -42,10 +51,9 @@ export default function App({ Component, pageProps }) {
           >
             <SplashScreen runComplete={(val) => setIntroRun(val)} />
           </motion.div>
-          ) : (
-            <Component {...pageProps} />
-          )
-        }
+          ) : showComponent || !isHome ? (
+          <Component {...pageProps} />
+        ) : null}
       </AnimatePresence>
       
     </div>

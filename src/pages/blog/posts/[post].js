@@ -9,8 +9,31 @@ import SocialLinks from '@/components/SocialLinks';
 import { blogMetaData, revalidationNum } from '@/lib/info';
 import PostLayout from '@/components/PostLayout';
 import CustomHead from '@/components/CustomHead';
+import { SocialIcon } from 'react-social-icons';
+import { useState, useEffect } from 'react';
 
 export default function post( {post, nextSlug, links} ) {
+  const [canShare, setCanShare] = useState(false);
+
+  useEffect(() => {
+    setCanShare(typeof navigator !== 'undefined' && navigator.share !== undefined);
+  }, []);
+
+  const handleShare = async () => {
+    try {
+      if (canShare) {
+        await navigator.share({
+          title: post.title,
+          text: 'Check out this cool blog post!',
+          url: window.location.href,
+        });
+      } else {
+        console.log('Share not supported on this browser');
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
 
   if(!post?.body){
     return(
@@ -50,7 +73,19 @@ export default function post( {post, nextSlug, links} ) {
               <PortableText value={post.body} components={RichTextComponents} />
 
               {/* Footer */}
-              <p className='text-2xl mx-auto my-6 font-sansM'>X</p>
+              {canShare ? (
+                <button onClick={handleShare}>
+                  <SocialIcon 
+                    className="text-sText hover:text-pHighlight my-6 font-sansM"
+                    network="sharethis" 
+                    fgColor="currentColor"
+                    bgColor="transparent" 
+                    style={{ height: 80, width: 80 }}
+                  />
+                </button>
+              ) : (
+                <p className='text-2xl mx-auto my-6 font-sansM'>X</p>
+              )}
 
               <div className='flex flex-wrap mb-4 text-sm md:text-md md:mb-12'>
                   <Tags Tags={tags} />

@@ -27,7 +27,7 @@ export default function BlogList({ posts, tag }) {
         <button
           key={i}
           onClick={() => goToPage(i)}
-          className={i === currentPage ? 'active text-pHighlight' : 'hover:text-pHighlight'}
+          className={i === currentPage ? 'active text-pHighlight' : 'hover:font-bold hover:scale-105 transition-transform'}
         >
           {i}&nbsp;&nbsp;&nbsp;
         </button>
@@ -39,9 +39,10 @@ export default function BlogList({ posts, tag }) {
   return (
     <div>
       {tag && <h2 className="text-4xl font-sansM mb-4 text-pHighlight">#{tag}</h2>}
-
+      
+      <div className='min-h-[65vh] md:h-[75vh]'>
       {currentPosts?.map(post => (
-        <div key={post._id} className='mb-4'>
+        <div key={post._id} className='mb-3'>
           <p className="text-[75%] font-nums text-sText">
             {formatDate(post.date)}
           </p>
@@ -55,7 +56,8 @@ export default function BlogList({ posts, tag }) {
 
         </div>
       ))}
-      <div className="mt-7 text-2xl font-nums w-full flex justify-center md:justify-start">
+      </div>
+      <div className="text-2xl font-nums w-full flex justify-center md:justify-start">
         {renderPageButtons()}
       </div>
     </div>

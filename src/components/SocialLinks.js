@@ -4,8 +4,9 @@ export default function SocialLinks( {links} ) {
 
     return(
         <div>
-            
-            <div className='hidden md:block'>
+
+            {/* Desktop View */}
+            <div className='hidden lg:block'>
                 <div className="fixed bottom-28 left-9 flex flex-col space-y-[-15px]">
 
                     {links?.map((social) => (
@@ -28,8 +29,9 @@ export default function SocialLinks( {links} ) {
                 <div className="fixed bottom-0 left-16 w-1 h-28 bg-gray-500 rounded-t"></div>
             </div>
 
-
-            <div className='flex justify-center items-center mx-auto space-x-4 md:hidden'>
+            
+            {/* Mobile View */}
+            <div className='flex justify-center items-center mx-auto space-x-4 lg:hidden'>
                     
                 {links?.map((social) => (
                     

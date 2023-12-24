@@ -39,7 +39,7 @@ export default function PostBar({post, nextSlug}) {
 
       {post?.altPost !== undefined ? (
 
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <h4 className="pl-9 pt-10 md:text-xl text-pHighlight">Outline</h4>
           <p
           className="pl-9 pt-1 md:text-md ">

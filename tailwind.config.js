@@ -16,6 +16,13 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1015px', // change this to your desired breakpoint
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       colors: myColors,
       fontFamily: {
