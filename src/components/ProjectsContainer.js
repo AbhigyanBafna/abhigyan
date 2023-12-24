@@ -13,14 +13,16 @@ export default function Projects( {projects}) {
           }
         };
       
-        if (containerRef.current) {
-          containerRef.current.addEventListener('wheel', handleWheel);
+        const currentRef = containerRef.current;
+      
+        if (currentRef) {
+          currentRef.addEventListener('wheel', handleWheel);
         }
       
         // Clean up the event listener when the component unmounts
         return () => {
-          if (containerRef.current) {
-            containerRef.current.removeEventListener('wheel', handleWheel);
+          if (currentRef) {
+            currentRef.removeEventListener('wheel', handleWheel);
           }
         };
       }, []);

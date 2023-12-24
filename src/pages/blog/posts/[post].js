@@ -12,7 +12,7 @@ import CustomHead from '@/components/CustomHead';
 import { SocialIcon } from 'react-social-icons';
 import { useState, useEffect } from 'react';
 
-export default function post( {post, nextSlug, links} ) {
+export default function Post({ post, nextSlug, links }) {
   const [canShare, setCanShare] = useState(false);
 
   useEffect(() => {
