@@ -48,7 +48,7 @@ export default function PostBar({post, nextSlug}) {
         </div> 
 
       ) : (
-        <p></p>
+        null
       )} 
 
     </div>

@@ -22,11 +22,16 @@ export default function Post({ post, nextSlug, links }) {
   }, []);
 
   const handleShare = async () => {
+    let caption = 'Check out this cool blog post!\n';
+    if (post?.altPost !== undefined && post?.altPost !== null) {
+      caption = post.altPost + '\n';
+    }
+      
     try {
       if (canShare) {
         await navigator.share({
           title: post.title,
-          text: 'Check out this cool blog post!',
+          text: caption,
           url: window.location.href,
         });
       } else {
