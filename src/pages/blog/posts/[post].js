@@ -11,6 +11,8 @@ import PostLayout from '@/components/PostLayout';
 import CustomHead from '@/components/CustomHead';
 import { SocialIcon } from 'react-social-icons';
 import { useState, useEffect } from 'react';
+import { Provider, LikeButton } from "@lyket/react";
+
 
 export default function Post({ post, nextSlug, links }) {
   const [canShare, setCanShare] = useState(false);
@@ -71,21 +73,39 @@ export default function Post({ post, nextSlug, links }) {
               </div>
 
               <PortableText value={post.body} components={RichTextComponents} />
+              
 
               {/* Footer */}
-              {canShare ? (
-                <button onClick={handleShare}>
-                  <SocialIcon 
-                    className="text-sText hover:text-pHighlight my-6 font-sansM"
-                    network="sharethis" 
-                    fgColor="currentColor"
-                    bgColor="transparent" 
-                    style={{ height: 80, width: 80 }}
-                  />
-                </button>
-              ) : (
-                <p className='text-2xl mx-auto my-6 font-sansM'>X</p>
-              )}
+              <div className='-ml-2 font-bold flex' >
+                  <Provider apiKey="pt_6cf817c3974e7525d4f01c9371568f" 
+                  theme={{
+                    colors: {
+                      text: "#FFB938",
+                    }
+                  }}>
+                    <LikeButton
+                      namespace="arc"
+                      id={post?.slug?.current}
+                      hideCounterIfLessThan={20000000000}
+                      component={LikeButton.templates.Twitter}
+                    />
+                  </Provider>
+
+                {canShare ? (
+                  <button onClick={handleShare}>
+                    <SocialIcon 
+                      className="text-sText hover:text-pHighlight font-sansM -ml-3"
+                      network="sharethis" 
+                      fgColor="currentColor"
+                      bgColor="transparent" 
+                    />
+                  </button>
+                ) : (
+                  null
+                )}
+
+              </div>
+
 
               <div className='flex flex-wrap mb-4 text-sm md:text-md md:mb-12'>
                   <Tags Tags={tags} />
