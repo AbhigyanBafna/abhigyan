@@ -6,12 +6,13 @@ import { RichTextComponents } from '@/components/RichTextComponents';
 import { formatDate } from '@/utils/generalUtils';
 import Tags from '@/components/Tags';
 import SocialLinks from '@/components/SocialLinks';
-import { blogMetaData, revalidationNum } from '@/lib/info';
+import { revalidationNum } from '@/lib/info';
 import PostLayout from '@/components/PostLayout';
 import CustomHead from '@/components/CustomHead';
 import { SocialIcon } from 'react-social-icons';
 import { useState, useEffect } from 'react';
 import { Provider, LikeButton } from "@lyket/react";
+import { urlFor } from '@/utils/sanity';
 
 
 export default function Post({ post, nextSlug, links }) {
@@ -20,6 +21,8 @@ export default function Post({ post, nextSlug, links }) {
   useEffect(() => {
     setCanShare(typeof navigator !== 'undefined' && navigator.share !== undefined);
   }, []);
+
+  let metaImg = "https://abhigyan.tech/meta_Blog.png";
 
   const handleShare = async () => {
     let caption = 'Check out this cool blog post!\n';
@@ -43,9 +46,10 @@ export default function Post({ post, nextSlug, links }) {
   };
 
   if(!post?.body){
+
     return(
       <>
-      <CustomHead metadata={blogMetaData}/>
+      <CustomHead title="Arc" image={metaImg} url="https://abhigyan.tech/blog/posts" description="Scripting life's odesseys, one blog at a time." siteName="abhigyan.tech" altImg ="The word Arc in a shade of gold."/>
       <PostLayout post={post} nextSlug={nextSlug} >
 
         <div className='px-5 md:max-w-[600px] overflow-hidden md:mx-auto flex flex-col items-center'>
@@ -61,9 +65,18 @@ export default function Post({ post, nextSlug, links }) {
 
   const tags = post?.tags?.map(item => item.title);
 
+  metaImg = urlFor(post?.metaImage).url() || "https://abhigyan.tech/meta_Blog.png";
+
   return(
     <div className='font-nums'>
-        <CustomHead metadata={blogMetaData}/>
+        <CustomHead
+          title={post?.title}
+          image={metaImg}
+          url={`https://abhigyan.tech/blog/posts/${post?.slug?.current}`}
+          description={post.altPost || "Scripting life's odesseys, one blog at a time."}
+          siteName="abhigyan.tech"
+          altImg="The word Arc in a shade of gold."
+        />
         <PostLayout post={post} nextSlug={nextSlug}>
 
           <div className='md:pl-40'>

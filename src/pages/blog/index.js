@@ -3,7 +3,7 @@ import { sanityClient } from '@/utils/sanityServer';
 import { profileQuery, socialsQuery, stringSlugsQuery, tagsQuery } from '@/utils/queries';
 import { ArrowIcon } from '@/lib/icons';
 import Tags from '@/components/Tags';
-import { blogMetaData, revalidationNum } from '@/lib/info';
+import { revalidationNum } from '@/lib/info';
 import CustomHead from '@/components/CustomHead';
 
 export default function Blog( {profile, links, allTags, allSlugs} ) {
@@ -17,7 +17,7 @@ export default function Blog( {profile, links, allTags, allSlugs} ) {
 
     return(
       <>
-      <CustomHead metadata={blogMetaData}/>
+      <CustomHead title="Arc" image="https://abhigyan.tech/meta_Blog.png" url="https://abhigyan.tech/blog" description="Scripting life's odesseys, one blog at a time." siteName="abhigyan.tech" altImg ="The word Arc in a shade of gold."/>
       <Layout email={profile?.email} links={links}>
           
         <div className='mx-auto text-center md:max-w-[800px]'>

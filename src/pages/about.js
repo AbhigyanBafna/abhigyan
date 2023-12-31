@@ -1,4 +1,4 @@
-import { htmlFormatter, metaData, revalidationNum } from '@/lib/info'
+import { htmlFormatter, revalidationNum } from '@/lib/info'
 import { ArrowIcon, FileIcon } from "@/lib/icons";
 import Layout from '../components/layout'
 import { sanityClient } from '@/utils/sanityServer';
@@ -9,7 +9,7 @@ export default function About( {profile, links} ) {
 
     return(
       <>
-      <CustomHead metadata={metaData}/>
+      <CustomHead title="Abhigyan Bafna" image="https://abhigyan.tech/meta_Image.png" url="https://abhigyan.tech/about" description="Code. Coffee. Marvel." siteName="abhigyan.tech" altImg ="The letters a and b in a shade of gold."/>
         <Layout email={profile?.email} links={links}>
 
             <div className='mx-auto max-w-[800px] pr-4 pl-4'>

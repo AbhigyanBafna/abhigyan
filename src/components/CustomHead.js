@@ -1,27 +1,30 @@
 import Head from 'next/head';
 
-const CustomHead = ({ metadata }) => {
+const CustomHead = ({title, image, url, description, siteName, altImg}) => {
 
   return (
     <Head>
 
       {/* Open Graph tags */}
-      <meta property="og:title" content={metadata.openGraph.title} />
-      <meta property="og:description" content={metadata.openGraph.description} />
-      <meta property="og:image" content={metadata.openGraph.image} />
-      <meta property="og:url" content={metadata.openGraph.url} />
-      <meta property="og:site_name" content={metadata.openGraph.siteName} />
-      <meta property="og:type" content={metadata.openGraph.type} />
+      <meta property="og:title" content={title} />
+      <meta property="og:image" content={image} />
+      <meta property="og:url" content={url}/>
+      <meta property="og:description" content={description} />
+      <meta property="og:locale" content="en-IN" />
+      <meta property="og:type" content="website" />
+
+      {siteName && <meta property="og:site_name" content={siteName} />}
+      {altImg && <meta property="og:image:alt" content={altImg} />}
 
       {/* Twitter Card tags */}
-      <meta name="twitter:title" content={metadata.twitter.title} />
-      <meta name="twitter:card" content={metadata.twitter.card} />
-      <meta name="twitter:site" content={metadata.twitter.site} />
-      <meta name="twitter:description" content={metadata.twitter.description} />
-      <meta name="twitter:image" content={metadata.twitter.image} />
-      <meta name="twitter:image:alt" content={metadata.twitter.image_alt} />
-      <meta name="twitter:domain" content={metadata.twitter.domain} />
-      <meta name="twitter:creator" content={metadata.twitter.creator} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:card" content="summary_large_image"/>
+      <meta name="twitter:site" content="@Abhigyan_Bafna"/>
+      <meta name="twitter:creator" content="@Abhigyan_Bafna" />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+      
+      {altImg && <meta name="twitter:image:alt" content={altImg} />}
 
     </Head>
   );

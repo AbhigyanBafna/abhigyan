@@ -2,14 +2,14 @@ import Layout from '@/components/layout';
 import { postsByTagQuery, profileQuery, socialsQuery, tagsQuery } from '@/utils/queries';
 import BlogList from '@/components/BlogList';
 import { sanityClient } from '@/utils/sanityServer';
-import { blogMetaData, revalidationNum } from '@/lib/info';
-import CustomHead from '@/components/CustomHead';
+import { revalidationNum } from '@/lib/info';
+import CustomHead from '@/components/CustomHead'
 
 export default function Blog( {profile, links, tagPosts, currentTag} ) {
 
     return(
       <>
-      <CustomHead metadata={blogMetaData}/>
+      <CustomHead title="Arc" image="https://abhigyan.tech/meta_Blog.png" url="https://abhigyan.tech/blog/posts" description="Scripting life's odesseys, one blog at a time." siteName="abhigyan.tech" altImg ="The word Arc in a shade of gold."/>
       <Layout email={profile?.email} links={links}>
 
         <div className='text-xl ml-4 mr-4 mt-5 mb-5 md:max-w-[800px] overflow-hidden md:mx-auto md:text-2xl md:mt-0'>

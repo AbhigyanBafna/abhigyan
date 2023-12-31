@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { hero, htmlFormatter, metaData, revalidationNum } from '@/lib/info'
+import { hero, htmlFormatter, revalidationNum } from '@/lib/info'
 import Layout from '../components/layout'
 import { motion } from 'framer-motion'
 import { urlFor } from '@/utils/sanity';
@@ -11,7 +11,7 @@ export default function Home({ profile, links }) {
   
   return (
     <>
-    <CustomHead metadata={metaData}/>
+    <CustomHead title="Abhigyan Bafna" image="https://abhigyan.tech/meta_Image.png" url="https://abhigyan.tech" description="Code. Coffee. Marvel." siteName="abhigyan.tech" altImg ="The letters a and b in a shade of gold."/>
     <Layout email={profile?.email} links={links}>
 
       <p className='p-2 text-2xl md:text-3xl mt-12 md:mt-16 mx-auto text-center md:max-w-[800px]'>

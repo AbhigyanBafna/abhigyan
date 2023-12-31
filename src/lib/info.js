@@ -17,56 +17,6 @@ export const htmlFormatter = (info) => {
   return <>{Parser(info)}</> // Render the parsed info
 };
 
-export const metaData = {
-
-  openGraph: {
-    title: 'Abhigyan Bafna',
-    description: 'Code. Coffee. Marvel.',
-    url: 'https://abhigyan.tech',
-    siteName: 'Abhigyan Bafna',
-    image: 'https://abhigyan.tech/meta_Image.png',
-    locale: 'en-IN',
-    type: 'website',
-  },
-
-  twitter: {
-    title: 'Abhigyan Bafna',
-    card: 'summary_large_image',
-    description: 'Code. Coffee. Marvel.',
-    site: "@Abhigyan_Bafna",
-    image: 'https://abhigyan.tech/meta_Image.png',
-    image_alt: "The letters a and b",
-    creator: "Abhigyan Bafna",
-    domain: 'https://abhigyan.tech',
-  },
-
-};
-
-export const blogMetaData = {
-
-  openGraph: {
-    title: 'Arc',
-    description: "Scripting life's odesseys, one blog at a time.",
-    url: 'https://abhigyan.tech/blog',
-    siteName: 'Arc',
-    image: 'https://abhigyan.tech/meta_Blog.png',
-    locale: 'en-IN',
-    type: 'website',
-  },
-
-  twitter: {
-    title: 'Arc',
-    card: 'summary_large_image',
-    description: "Scripting life's odesseys, one blog at a time.",
-    site: "@Abhigyan_Bafna",
-    image: 'https://abhigyan.tech/meta_Blog.png',
-    image_alt: "The word Arc written in Gold",
-    creator: "Abhigyan Bafna",
-    domain: 'https://abhigyan.tech/blog',
-  },
-
-}
-
 export const sanityConfig = {
   dataset: 'production',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,

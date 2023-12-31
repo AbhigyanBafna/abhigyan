@@ -41,7 +41,13 @@ export default defineType({
       name: 'altPost',
       title: 'Alt Post',
       type: 'text',
-      description: 'A summary about the post.',
+      description: 'A TLDR, should not exceed 2 lines.',
+    }),
+    defineField({
+      name: 'metaImage',
+      title: 'Meta Image',
+      description: 'Image to be rendered in meta tags.',
+      type: 'image',
     }),
     defineField({
       name: 'body',
