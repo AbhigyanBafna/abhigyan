@@ -48,3 +48,9 @@ export const slugsQuery = groq`
 } 
 `
 
+export const getVideoUrl = (file) => groq`
+*[_type == "post" && body[].asset._ref match "${file.asset._ref}"]{
+  "videoUrl": body[asset._ref match "${file.asset._ref}"].asset->url
+}
+`
+

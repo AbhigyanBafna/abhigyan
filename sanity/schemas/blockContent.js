@@ -83,6 +83,7 @@ export default defineType({
           type: 'url',
           name: 'url',
           title: 'URL',
+          description: 'Should be an Embed URL',
         },
         {
           type: 'boolean',
@@ -96,6 +97,14 @@ export default defineType({
           hidden: ({ parent }) => !parent.isTweet,
         },
       ],
+    }),
+    defineArrayMember({
+      type: 'file',
+      name: 'video',
+      title: 'Video',
+      options: {
+        accept: 'video/*'
+      },
     }),
   ],
 })
