@@ -1,0 +1,55 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <div class="page">
+    <header class="top-mark">
+      <span class="site">abhigyan.tech</span>
+      <span class="sep">·</span>
+      <span class="year">MMXXVI</span>
+      <button
+        class="toggle"
+        id="theme-toggle"
+        type="button"
+        aria-label="Toggle light / dark mode"
+        title="Toggle light / dark"
+      >
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zm0 1v10a5 5 0 0 1 0-10z" />
+        </svg>
+      </button>
+    </header>
+
+    <main class="prose-wrap">
+      <p class="prose">
+        <span class="name">Abhigyan Bafna</span>
+        <span class="quiet"
+          > &mdash; a 23-year-old software engineer in Bombay, building
+        </span><em>AI-native products</em><span class="quiet">
+          that actually ship. Lately: an Indian equity research agent with
+          seventeen self-coordinating tools, and a Hinglish voice agent for
+          real-estate lead qualification. I work where a domain meets AI, and
+          I&apos;m
+        </span><em>optimising for freedom,</em><span class="quiet">
+          not status. See the
+        </span><a href="">projects</a><span class="quiet">, read the </span
+        ><a href="">writing</a><span class="quiet">, browse </span><a
+          href="https://github.com/AbhigyanBafna"
+          target="_blank"
+          rel="noopener noreferrer">GitHub</a
+        ><span class="quiet">, or </span><a href="mailto:abhigyansbafna@gmail.com"
+          >say hello</a
+        ><span class="quiet">.</span>
+      </p>
+    </main>
+
+    <footer class="floor">
+      <div class="floor-meta">
+        <span class="dot"></span>Bombay<span class="sep">·</span>MMXXVI<span
+          class="sep">·</span
+        >Open to interesting things
+      </div>
+    </footer>
+  </div>
+</Layout>
