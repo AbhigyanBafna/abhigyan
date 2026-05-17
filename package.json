@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
-    "@fontsource/instrument-serif": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
+    "@fontsource/raleway": "^5.2.8",
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.2.2",
     "tailwindcss": "^4.2.4"

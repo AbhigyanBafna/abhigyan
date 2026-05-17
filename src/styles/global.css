@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-@import "@fontsource/instrument-serif/400.css";
-@import "@fontsource/instrument-serif/400-italic.css";
-@import "@fontsource/jetbrains-mono/300.css";
+@import "@fontsource/raleway/400.css";
+@import "@fontsource/raleway/400-italic.css";
+@import "@fontsource/raleway/500.css";
 @import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/jetbrains-mono/500.css";
 
@@ -38,7 +38,7 @@
 }
 
 :root {
-  --font-serif: "Raleway", "Instrument Serif", Georgia, sans-serif;
+  --font-serif: "Raleway", Georgia, sans-serif;
   --font-mono: "JetBrains Mono", "Courier New", monospace;
   --prose-size: clamp(16px, 1.3vw, 22px);
   --prose-max: 620px;
