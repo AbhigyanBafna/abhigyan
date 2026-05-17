@@ -1,0 +1,73 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+interface Project {
+  name: string;
+  tag: string;
+  date: string;
+  html: string;
+}
+
+const projects: Project[] = [
+  {
+    name: "Finscope",
+    tag: "AI · Multi-agent",
+    date: "Jan 2026",
+    html: 'Indian equity research agent with seventeen self-coordinating tools — reads live filings, earnings calls, and analyst reports, then synthesises. <em>Does in minutes what a junior analyst takes days to finish.</em> See it on <a href="#">GitHub</a> or watch the <a href="#">demo</a>.',
+  },
+  {
+    name: "TubeCompanion",
+    tag: "Chrome Extension",
+    date: "Oct 2025",
+    html: 'Layers an AI companion on any YouTube video — chapter summaries, Q&amp;A, key-moment extraction, without leaving the tab. <a href="#">Live on the Chrome Store</a>.',
+  },
+  {
+    name: "VoiceFinance",
+    tag: "Voice · Mobile",
+    date: "Aug 2024",
+    html: 'Personal finance app with voice input and natural-language queries. <a href="#">GitHub</a>.',
+  },
+  {
+    name: "Hinglish RE Agent",
+    tag: "Voice · AI",
+    date: "May 2024",
+    html: 'Voice agent for real-estate lead qualification, switching naturally between Hindi and English. <a href="#">GitHub</a>.',
+  },
+  {
+    name: "AI Summariser",
+    tag: "NLP",
+    date: "Nov 2023",
+    html: 'Long-form document summariser. Built before it became table stakes. <a href="#">GitHub</a>.',
+  },
+  {
+    name: "Resume Parser",
+    tag: "NLP",
+    date: "Jul 2023",
+    html: 'Structured extraction from unstructured CVs. <a href="#">GitHub</a>.',
+  },
+];
+---
+
+<Layout
+  title="Projects — Abhigyan Bafna"
+  description="Selected projects by Abhigyan Bafna."
+  crumb="projects"
+>
+  <div class="proj-list">
+    {
+      projects.map((p) => (
+        <div class="proj-item">
+          <div class="proj-header">
+            <div class="proj-left">
+              <span class="proj-name">{p.name}</span>
+              <span class="proj-name-sep">·</span>
+              <span class="proj-tag">{p.tag}</span>
+            </div>
+            <span class="proj-date">{p.date}</span>
+          </div>
+          <p class="proj-desc" set:html={p.html} />
+        </div>
+      ))
+    }
+  </div>
+</Layout>

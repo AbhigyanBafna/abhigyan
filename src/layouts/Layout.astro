@@ -4,11 +4,13 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  crumb?: string;
 }
 
 const {
   title = "Abhigyan Bafna",
   description = "Abhigyan Bafna — software engineer in Bombay, building AI-native products.",
+  crumb,
 } = Astro.props;
 ---
 
@@ -20,9 +22,14 @@ const {
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
     <title>{title}</title>
 
-    {/* Resolve theme before paint to avoid flash. */}
     <script is:inline>
       (function () {
         try {
@@ -39,7 +46,43 @@ const {
     </script>
   </head>
   <body>
-    <slot />
+    <div class="page">
+      <header class="top-mark">
+        {
+          crumb ? (
+            <>
+              <a href="/" class="site">abhigyan.tech</a>
+              <span class="sep">/</span>
+              <span class="crumb-current">{crumb}</span>
+            </>
+          ) : (
+            <span class="site">abhigyan.tech</span>
+          )
+        }
+      </header>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer class="floor">
+        <div class="floor-meta">
+          <span class="dot"></span>Mumbai<span class="sep">·</span>2026<span
+            class="sep">·</span
+          >Enjoy your journey<span class="sep">·</span><button
+            class="toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Toggle light / dark mode"
+            title="Toggle light / dark"
+          >
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zm0 1v10a5 5 0 0 1 0-10z" />
+            </svg>
+          </button>
+        </div>
+      </footer>
+    </div>
 
     <script>
       const root = document.documentElement;
