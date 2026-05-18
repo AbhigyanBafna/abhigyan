@@ -5,12 +5,14 @@ interface Props {
   title?: string;
   description?: string;
   crumb?: string;
+  backLink?: { href: string; label: string; suffix?: string };
 }
 
 const {
   title = "Abhigyan Bafna",
   description = "Abhigyan Bafna — software engineer in Bombay, building AI-native products.",
   crumb,
+  backLink,
 } = Astro.props;
 ---
 
@@ -43,7 +45,16 @@ const {
     <div class="page">
       <header class="top-mark">
         {
-          crumb ? (
+          backLink ? (
+            <>
+              <a href={backLink.href} class="back-link">
+                ../{backLink.label}
+              </a>
+              {backLink.suffix && (
+                <span class="back-link-suffix">/{backLink.suffix}</span>
+              )}
+            </>
+          ) : crumb ? (
             <>
               <a href="/" class="site">abhigyan.tech</a>
               <span class="sep">/</span>

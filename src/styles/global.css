@@ -17,10 +17,10 @@
   --quiet: rgba(241, 232, 211, 0.55);
   --hush: rgba(241, 232, 211, 0.30);
   --whisper: rgba(241, 232, 211, 0.16);
-  --accent: #d4a361;
-  --link-under: rgba(212, 163, 97, 0.35);
-  --vignette-1: rgba(212, 163, 97, 0.05);
-  --vignette-2: rgba(212, 163, 97, 0.03);
+  --accent: #b8956a;
+  --link-under: rgba(184, 149, 106, 0.35);
+  --vignette-1: rgba(184, 149, 106, 0.025);
+  --vignette-2: rgba(184, 149, 106, 0.015);
   --grain-opacity: 1;
 }
 
@@ -30,9 +30,9 @@
   --quiet: rgba(28, 20, 16, 0.62);
   --hush: rgba(28, 20, 16, 0.34);
   --whisper: rgba(28, 20, 16, 0.18);
-  --accent: #8b2e1f;
-  --link-under: rgba(139, 46, 31, 0.35);
-  --vignette-1: rgba(139, 46, 31, 0.02);
+  --accent: #5a3a28;
+  --link-under: rgba(90, 58, 40, 0.35);
+  --vignette-1: rgba(90, 58, 40, 0.02);
   --vignette-2: rgba(60, 40, 20, 0.015);
   --grain-opacity: 0.5;
 }
@@ -40,7 +40,23 @@
 :root {
   --font-serif: "Raleway", Georgia, sans-serif;
   --font-mono: "JetBrains Mono", "Courier New", monospace;
-  --prose-size: clamp(16px, 1.3vw, 22px);
+
+  /* ─── Typography scale ───
+     Single source of truth for every font-size on the site.
+     Change here once → propagates everywhere. Mobile breakpoints
+     (≤640px) override --text-name and --text-body inline for legibility. */
+  --text-display: clamp(28px, 2.8vw, 44px); /* post page title (only used once) */
+  --text-name:    clamp(24px, 2.5vw, 40px); /* homepage name / index page title */
+  --text-h2:      clamp(20px, 1.7vw, 26px); /* section heading + project name */
+  --text-h3:      clamp(18px, 1.4vw, 22px); /* subsection heading */
+  --text-body:    clamp(16px, 1.3vw, 22px); /* prose body (homepage + post + index titles) */
+  --text-meta:    clamp(16px, 1.2vw, 20px); /* secondary body — project descriptions */
+  --text-caption: clamp(13px, 0.95vw, 15px); /* italic image captions */
+  --text-mono-md: clamp(10px, 0.7vw, 13px); /* top-mark, floor-meta */
+  --text-mono-sm: clamp(10px, 0.7vw, 12px); /* byline, tag pill, sidenote, filter banner */
+  --text-mono-xs: clamp(9px, 0.65vw, 11px); /* dates, micro-meta */
+
+  --prose-size: var(--text-body); /* legacy alias */
   --prose-max: 620px;
   --pad-x: clamp(28px, 7vw, 112px);
   --pad-y: clamp(36px, 5vh, 64px);
@@ -132,7 +148,7 @@ ul {
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
-  font-size: clamp(10px, 0.7vw, 13px);
+  font-size: var(--text-mono-md);
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--hush);
@@ -212,7 +228,7 @@ a.site,
 .name {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(24px, 2.5vw, 40px);
+  font-size: var(--text-name);
   line-height: 1.1;
   letter-spacing: -0.015em;
   color: var(--text);
@@ -311,7 +327,7 @@ a.site,
 
 .floor-meta {
   font-family: var(--font-mono);
-  font-size: clamp(10px, 0.7vw, 13px);
+  font-size: var(--text-mono-md);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--hush);
@@ -428,7 +444,7 @@ a.site,
 
 .proj-name {
   font-family: var(--font-serif);
-  font-size: clamp(20px, 1.7vw, 26px);
+  font-size: var(--text-h2);
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--text);
@@ -437,7 +453,7 @@ a.site,
 
 .proj-name-sep {
   font-family: var(--font-mono);
-  font-size: clamp(9px, 0.65vw, 11px);
+  font-size: var(--text-mono-xs);
   color: var(--hush);
   margin: 0 10px;
   opacity: 0.6;
@@ -445,7 +461,7 @@ a.site,
 
 .proj-tag {
   font-family: var(--font-mono);
-  font-size: clamp(9px, 0.65vw, 11px);
+  font-size: var(--text-mono-xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--quiet);
@@ -455,7 +471,7 @@ a.site,
 
 .proj-date {
   font-family: var(--font-mono);
-  font-size: clamp(9px, 0.65vw, 11px);
+  font-size: var(--text-mono-xs);
   letter-spacing: 0.1em;
   color: var(--hush);
   white-space: nowrap;
@@ -465,7 +481,7 @@ a.site,
 
 .proj-desc {
   font-family: var(--font-serif);
-  font-size: clamp(16px, 1.2vw, 20px);
+  font-size: var(--text-meta);
   line-height: 1.65;
   color: var(--quiet);
   text-wrap: pretty;
@@ -516,5 +532,317 @@ a.site,
 @media (prefers-reduced-motion: reduce) {
   .proj-list {
     animation: none;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   /writing — minimal post index
+───────────────────────────────────────────── */
+.post-list {
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: clamp(48px, 8vh, 96px) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  animation: rise 1.0s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.post-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  color: var(--text);
+  transition: color 0.22s ease;
+}
+
+.post-item:hover {
+  color: var(--accent);
+}
+
+.post-title {
+  font-family: var(--font-serif);
+  font-size: var(--prose-size);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  transition: color 0.22s ease;
+}
+
+.post-date {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hush);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.22s ease;
+}
+
+.post-item:hover .post-date {
+  color: var(--quiet);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-list {
+    animation: none;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   TOP MARK — back-link variant (used on posts + tag pages)
+───────────────────────────────────────────── */
+.top-mark .back-link {
+  color: var(--hush);
+  font-family: var(--font-mono);
+  font-size: inherit;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.top-mark .back-link:hover {
+  color: var(--accent);
+}
+
+.top-mark .back-link-suffix {
+  color: var(--accent);
+  margin-left: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────
+   POST PAGE — title, byline, prose, tags
+───────────────────────────────────────────── */
+.post {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(48px, 8vh, 96px) 0 clamp(32px, 5vh, 64px);
+  animation: rise 1.0s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.post-head {
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: clamp(32px, 5vh, 56px);
+}
+
+.post-head .post-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--text-display);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.post-byline {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--hush);
+  margin: 0;
+}
+
+.post-prose {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  font-family: var(--font-serif);
+  font-size: var(--prose-size);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.post-prose > * + * {
+  margin-top: 1.2em;
+}
+
+.post-prose h2,
+.post-prose h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.post-prose h2 {
+  font-size: var(--text-h2);
+  margin-top: 2em;
+}
+
+.post-prose h3 {
+  font-size: var(--text-h3);
+  margin-top: 1.8em;
+}
+
+.post-prose em {
+  font-style: italic;
+}
+
+.post-prose strong {
+  font-weight: 500;
+}
+
+.post-prose a {
+  position: relative;
+  color: var(--text);
+  padding-bottom: 1px;
+}
+
+.post-prose a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--link-under);
+  transition: background 0.25s ease;
+}
+
+.post-prose a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.post-prose a:hover::after {
+  width: 100%;
+}
+
+.post-prose a:hover {
+  color: var(--accent);
+  transition: color 0.22s ease;
+}
+
+/* Figures (PostImage) — inset by default */
+.post-figure {
+  margin: 2em 0;
+}
+
+.post-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+}
+
+.post-figure--wide {
+  /* Reserved for future use — breaks out beyond prose column */
+  margin-left: clamp(0px, -8vw, -100px);
+  margin-right: clamp(0px, -8vw, -100px);
+}
+
+.post-caption {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-caption);
+  line-height: 1.5;
+  color: var(--quiet);
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* Tag pill row at the bottom of each post */
+.post-tags {
+  width: 100%;
+  max-width: 700px;
+  margin-top: clamp(48px, 8vh, 80px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.15em;
+  text-transform: lowercase;
+  color: var(--quiet);
+  padding: 5px 12px;
+  border: 1px solid var(--whisper);
+  border-radius: 999px;
+  transition:
+    color 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.tag-pill:hover,
+.tag-pill--active {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+}
+
+/* ─────────────────────────────────────────────
+   SIDENOTE — Tufte-style margin note
+   Float-based so it anchors vertically near its source insertion point.
+   Negative margin-right pushes it into the right gutter, outside the
+   prose column, so prose text never wraps around it.
+───────────────────────────────────────────── */
+.sn-wrapper {
+  display: inline;
+}
+
+.sn {
+  float: right;
+  clear: right;
+  width: 200px;
+  margin: 0.3em -240px 0.6em 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  line-height: 1.55;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--quiet);
+  padding-left: 14px;
+  border-left: 1px solid var(--whisper);
+  text-wrap: pretty;
+}
+
+/* Inline fallback: when there's not enough room in the right margin.
+   Threshold derived from: prose-center math means sn-right ≈ V/2 + 590
+   needs to stay inside V with breathing room. 1280 gives ~50px buffer
+   on a 13" MacBook in default scaling. */
+@media (max-width: 1280px) {
+  .sn {
+    float: none;
+    display: block;
+    width: auto;
+    max-width: 100%;
+    margin: 1.2em 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .post-head .post-title {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+  .post-prose {
+    font-size: clamp(16px, 4.5vw, 19px);
+    line-height: 1.65;
   }
 }

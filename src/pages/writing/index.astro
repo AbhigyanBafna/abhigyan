@@ -1,0 +1,26 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { formatPostDate } from "../../lib/constants";
+
+const posts = (await getCollection("writing")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Layout
+  title="Writing — Abhigyan Bafna"
+  description="Essays and notes by Abhigyan Bafna."
+  crumb="writing"
+>
+  <div class="post-list">
+    {
+      posts.map((p) => (
+        <a class="post-item" href={`/writing/${p.id}`}>
+          <span class="post-title">{p.data.title}</span>
+          <span class="post-date">{formatPostDate(p.data.date)}</span>
+        </a>
+      ))
+    }
+  </div>
+</Layout>

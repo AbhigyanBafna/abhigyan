@@ -26,4 +26,6 @@ pnpm-debug.log*
 # private working docs (kept locally, not published in this public repo)
 CLAUDE.md
 ROADMAP.txt
-temp.txt
+temp*.txt
+portfolio-production.tar.gz
+portfolio-export/*
