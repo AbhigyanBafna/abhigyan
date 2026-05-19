@@ -14,9 +14,11 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.4",
+    "@astrojs/vercel": "^10.0.7",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/raleway": "^5.2.8",
     "@tailwindcss/vite": "^4.2.4",
+    "@upstash/redis": "^1.38.0",
     "astro": "^6.2.2",
     "tailwindcss": "^4.2.4"
   },

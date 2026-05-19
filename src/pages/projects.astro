@@ -1,4 +1,5 @@
 ---
+export const prerender = true;
 import Layout from "../layouts/Layout.astro";
 
 interface Project {
@@ -8,42 +9,51 @@ interface Project {
   html: string;
 }
 
-const projects: Project[] = [
+const ownProjects: Project[] = [
   {
-    name: "Finscope",
-    tag: "AI · Multi-agent",
-    date: "Jan 2026",
-    html: 'Indian equity research agent with seventeen self-coordinating tools — reads live filings, earnings calls, and analyst reports, then synthesises. <em>Does in minutes what a junior analyst takes days to finish.</em> See it on <a href="#">GitHub</a> or watch the <a href="#">demo</a>.',
-  },
-  {
-    name: "TubeCompanion",
+    name: "Seismo",
     tag: "Chrome Extension",
-    date: "Oct 2025",
-    html: 'Layers an AI companion on any YouTube video — chapter summaries, Q&amp;A, key-moment extraction, without leaving the tab. <a href="#">Live on the Chrome Store</a>.',
+    date: "2025",
+    html: 'Monitors every browser request and surfaces errors instantly with colour-coded alerts. Privacy-first design, dev-friendly debugging tools and smart root-cause analysis. <a href="https://chromewebstore.google.com/detail/seismo/ojdbiddhfbcchdabkhampaefmmkochgj" target="_blank" rel="noopener noreferrer">Chrome Store</a>.',
   },
   {
-    name: "VoiceFinance",
-    tag: "Voice · Mobile",
-    date: "Aug 2024",
-    html: 'Personal finance app with voice input and natural-language queries. <a href="#">GitHub</a>.',
+    name: "TheAgenticBrowser",
+    tag: "Multi-agent · AI",
+    date: "2024",
+    html: 'Open-source browser agent that turns natural language into completed tasks. Can do research, e-commerce, form filling, cross-domain scraping and much more. Unlike scripted automation, it self-corrects itself via a 3 agent systemic loop. Planner -> Executor -> Critique until the task is done. <a href="https://github.com/TheAgenticAI/TheAgenticBrowser" target="_blank" rel="noopener noreferrer">GitHub</a>.',
   },
   {
-    name: "Hinglish RE Agent",
-    tag: "Voice · AI",
-    date: "May 2024",
-    html: 'Voice agent for real-estate lead qualification, switching naturally between Hindi and English. <a href="#">GitHub</a>.',
+    name: "CortexON",
+    tag: "Multi-agent · AI",
+    date: "2024",
+    html: 'Generalised open-source AI agent that coordinates five specialists : Web, File, Coder, Executor, API. Enabling them to handle research, code generation, file management and API integrations. Ships with a full React UI and HITL controls. <a href="https://github.com/TheAgenticAI/CortexON" target="_blank" rel="noopener noreferrer">GitHub</a>.',
+  },
+];
+
+const clientProjects: Project[] = [
+  {
+    name: "Bitcoin Trading System",
+    tag: "Agentic · Trading",
+    date: "2025",
+    html: "Multi-agent technical analysis using Agentic AI. Each agent owns a specific technical lens (Elliott Wave, Volume/OI, Lunar cycles, Market Events, etc) and all of them coordinate together to trade Bitcoin.",
   },
   {
-    name: "AI Summariser",
-    tag: "NLP",
-    date: "Nov 2023",
-    html: 'Long-form document summariser. Built before it became table stakes. <a href="#">GitHub</a>.',
+    name: "Personal Finance AI",
+    tag: "AI · FinTech",
+    date: "2025",
+    html: "Fine-tuned on a proprietary dataset with custom training pipelines. Ingests credit reports, cards, and real spending data to give personalised advice. Built to handle the messy, contradictory data that generic models can't.",
   },
   {
-    name: "Resume Parser",
-    tag: "NLP",
-    date: "Jul 2023",
-    html: 'Structured extraction from unstructured CVs. <a href="#">GitHub</a>.',
+    name: "Real Estate Video Generator",
+    tag: "AI · Generative",
+    date: "2025",
+    html: "Property address or images in, finished listing video out. A multi-stage pipeline with image analysis, feature extraction, storyboarding, voiceover, music selection and transitions.",
+  },
+  {
+    name: "Options Trader",
+    tag: "Agentic · Trading",
+    date: "2025",
+    html: "Autonomous options trader combining proprietary strategies with ML models. Millisecond execution with 30+ metrics collected per trade cycle, feeding back in to improve continuously.",
   },
 ];
 ---
@@ -55,7 +65,27 @@ const projects: Project[] = [
 >
   <div class="proj-list">
     {
-      projects.map((p) => (
+      ownProjects.map((p) => (
+        <div class="proj-item">
+          <div class="proj-header">
+            <div class="proj-left">
+              <span class="proj-name">{p.name}</span>
+              <span class="proj-name-sep">·</span>
+              <span class="proj-tag">{p.tag}</span>
+            </div>
+            <span class="proj-date">{p.date}</span>
+          </div>
+          <p class="proj-desc" set:html={p.html} />
+        </div>
+      ))
+    }
+
+    <div class="proj-section-rule">
+      <span class="proj-section-label">client work</span>
+    </div>
+
+    {
+      clientProjects.map((p) => (
         <div class="proj-item">
           <div class="proj-header">
             <div class="proj-left">

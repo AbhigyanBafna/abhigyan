@@ -1,12 +1,13 @@
 ---
 interface Props {
   title: string;
+  slug: string;
 }
 
-const { title } = Astro.props;
+const { title, slug } = Astro.props;
 ---
 
-<div class="share-wrap">
+<div class="share-wrap" data-slug={slug}>
   <button class="like-btn" id="like-btn" type="button" aria-label="Like this post">
     <svg class="like-icon" width="25" height="25" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.567 3.067 2 5 2C6.09 2 7.063 2.522 7.69 3.334L8 3.75L8.31 3.334C8.937 2.522 9.91 2 11 2C12.933 2 14.5 3.567 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>
@@ -48,15 +49,69 @@ const { title } = Astro.props;
 </div>
 
 <script>
-  // ── Like button (stub — wire to /api/like in Phase 2) ──
+  const wrap = document.querySelector<HTMLElement>(".share-wrap")!;
+  const slug = wrap.dataset.slug!;
   const likeBtn = document.getElementById("like-btn")!;
   const likeCount = document.getElementById("like-count")!;
-  let liked = false;
 
-  likeBtn.addEventListener("click", () => {
+  // ── View ping (fire-and-forget) ──
+  fetch("/api/view", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ slug }),
+  }).catch(() => {});
+
+  // ── Like button ──
+  const likedKey = `liked:${slug}`;
+  let liked = localStorage.getItem(likedKey) === "1";
+  likeBtn.classList.toggle("liked", liked);
+
+  async function fetchLikes() {
+    try {
+      const res = await fetch(`/api/like?slug=${encodeURIComponent(slug)}`);
+      const { likes } = await res.json();
+      if (liked && likes === 0) {
+        // localStorage says liked but Redis is 0 — previous POST failed, heal it
+        const healRes = await fetch("/api/like", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ slug }),
+        });
+        const { likes: healed } = await healRes.json();
+        likeCount.textContent = String(healed);
+      } else {
+        likeCount.textContent = String(likes);
+      }
+    } catch {
+      likeCount.textContent = "—";
+    }
+  }
+  fetchLikes();
+
+  likeBtn.addEventListener("click", async () => {
+    const action = liked ? "unlike" : "like";
     liked = !liked;
     likeBtn.classList.toggle("liked", liked);
-    // TODO Phase 2: POST /api/like with slug, update count from response
+    if (liked) {
+      localStorage.setItem(likedKey, "1");
+    } else {
+      localStorage.removeItem(likedKey);
+    }
+    try {
+      const res = await fetch("/api/like", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ slug, action }),
+      });
+      const { likes } = await res.json();
+      likeCount.textContent = String(likes);
+    } catch {
+      // revert optimistic update on failure
+      liked = !liked;
+      likeBtn.classList.toggle("liked", liked);
+      if (liked) localStorage.setItem(likedKey, "1");
+      else localStorage.removeItem(likedKey);
+    }
   });
 
   // ── Share button ──
@@ -79,7 +134,7 @@ const { title } = Astro.props;
         await navigator.share({ title: pageTitle, url: pageUrl });
         return;
       } catch {
-        // user cancelled or share failed — fall through to popover
+        // cancelled or failed — fall through to popover
       }
     }
     popover.hidden = !popover.hidden;

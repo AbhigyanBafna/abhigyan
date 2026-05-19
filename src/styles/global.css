@@ -462,17 +462,16 @@ a.site,
 
 .proj-tag {
   font-family: var(--font-mono);
-  font-size: var(--text-mono-xs);
-  letter-spacing: 0.18em;
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--quiet);
-  opacity: 0.7;
   white-space: nowrap;
 }
 
 .proj-date {
   font-family: var(--font-mono);
-  font-size: var(--text-mono-xs);
+  font-size: var(--text-mono-sm);
   letter-spacing: 0.1em;
   color: var(--hush);
   white-space: nowrap;
@@ -482,7 +481,7 @@ a.site,
 
 .proj-desc {
   font-family: var(--font-serif);
-  font-size: var(--text-meta);
+  font-size: var(--text-prose);
   line-height: 1.65;
   color: var(--quiet);
   text-wrap: pretty;
@@ -528,6 +527,29 @@ a.site,
 .proj-desc a:hover {
   color: var(--accent);
   transition: color 0.22s ease;
+}
+
+.proj-section-rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+}
+
+.proj-section-rule::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--whisper);
+}
+
+.proj-section-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--hush);
+  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
