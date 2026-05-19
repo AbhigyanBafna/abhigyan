@@ -19,5 +19,8 @@
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^6.2.2",
     "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "rehype-external-links": "^3.0.0"
   }
 }

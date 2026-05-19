@@ -49,7 +49,8 @@
   --text-name:    clamp(24px, 2.5vw, 40px); /* homepage name / index page title */
   --text-h2:      clamp(20px, 1.7vw, 26px); /* section heading + project name */
   --text-h3:      clamp(18px, 1.4vw, 22px); /* subsection heading */
-  --text-body:    clamp(16px, 1.3vw, 22px); /* prose body (homepage + post + index titles) */
+  --text-body:    clamp(16px, 1.3vw, 22px); /* prose body (homepage + index titles) */
+  --text-prose:   clamp(15px, 1.15vw, 19px); /* long-form post body — one notch under body for easier reading */
   --text-meta:    clamp(16px, 1.2vw, 20px); /* secondary body — project descriptions */
   --text-caption: clamp(13px, 0.95vw, 15px); /* italic image captions */
   --text-mono-md: clamp(10px, 0.7vw, 13px); /* top-mark, floor-meta */
@@ -657,7 +658,7 @@ a.site,
   width: 100%;
   max-width: 700px;
   font-family: var(--font-serif);
-  font-size: var(--prose-size);
+  font-size: var(--text-prose);
   line-height: 1.7;
   letter-spacing: -0.005em;
   color: var(--text);
@@ -666,6 +667,59 @@ a.site,
 
 .post-prose > * + * {
   margin-top: 1.2em;
+}
+
+/* Lists — restore markers + indentation that the global reset strips. */
+.post-prose ul,
+.post-prose ol {
+  margin-left: 1.5em;
+  padding-left: 0.5em;
+}
+
+.post-prose ul {
+  list-style: disc;
+}
+
+.post-prose ol {
+  list-style: decimal;
+}
+
+.post-prose li {
+  margin: 0.35em 0;
+  padding-left: 0.25em;
+}
+
+.post-prose li::marker {
+  color: var(--quiet);
+}
+
+.post-prose ul ul,
+.post-prose ol ul,
+.post-prose ul ol,
+.post-prose ol ol {
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+}
+
+.post-prose ul ul {
+  list-style: circle;
+}
+
+/* Blockquote */
+.post-prose blockquote {
+  margin: 1.4em 0;
+  padding: 0.2em 0 0.2em 1.2em;
+  border-left: 2px solid var(--whisper);
+  color: var(--quiet);
+  font-style: italic;
+}
+
+.post-prose blockquote p {
+  margin: 0;
+}
+
+.post-prose blockquote p + p {
+  margin-top: 0.8em;
 }
 
 .post-prose h2,
@@ -835,6 +889,108 @@ a.site,
   .post {
     animation: none;
   }
+}
+
+/* ─────────────────────────────────────────────
+   SHARE BUTTON
+───────────────────────────────────────────── */
+.share-wrap {
+  position: relative;
+  margin-top: clamp(32px, 5vh, 56px);
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.like-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--hush);
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  transition: color 0.22s ease;
+}
+
+.like-btn:hover,
+.like-btn.liked {
+  color: var(--accent);
+}
+
+.like-btn.liked .like-icon {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+
+.like-count {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.05em;
+  min-width: 1.5ch;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hush);
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  transition: color 0.22s ease;
+}
+
+.share-btn:hover {
+  color: var(--accent);
+}
+
+.share-popover {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  background: var(--bg);
+  border: 1px solid var(--whisper);
+  border-radius: 8px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 160px;
+  z-index: 10;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.32);
+}
+
+.share-popover[hidden] {
+  display: none;
+}
+
+.share-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--quiet);
+  background: none;
+  border: none;
+  border-radius: 5px;
+  padding: 7px 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.share-option:hover {
+  background: var(--whisper);
+  color: var(--accent);
 }
 
 @media (max-width: 640px) {

@@ -1,6 +1,8 @@
 ---
 import Layout from "./Layout.astro";
 import TagPill from "../components/TagPill.astro";
+import ShareButton from "../components/ShareButton.astro";
+import { getImage } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -8,13 +10,21 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, author, tags } = post.data;
+const { title, description, author, tags, cover } = post.data;
+
+let ogImage: string | undefined;
+if (cover) {
+  const optimized = await getImage({ src: cover, width: 1200, format: "jpeg" });
+  ogImage = new URL(optimized.src, "https://abhigyan.tech").href;
+}
 ---
 
 <Layout
   title={`${title} — Abhigyan Bafna`}
   description={description}
   backLink={{ href: "/writing", label: "writing" }}
+  ogImage={ogImage}
+  ogType="article"
 >
   <article class="post">
     <header class="post-head">
@@ -35,5 +45,7 @@ const { title, description, author, tags } = post.data;
         </footer>
       )
     }
+
+    <ShareButton title={title} />
   </article>
 </Layout>

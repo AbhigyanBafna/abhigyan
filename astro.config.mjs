@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
+import rehypeExternalLinks from 'rehype-external-links';
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,5 +11,19 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [mdx()]
+  markdown: {
+    rehypePlugins: [
+      [
+        rehypeExternalLinks,
+        {
+          target: '_blank',
+          rel: ['noopener', 'noreferrer'],
+          // Treat any http(s) link as external. Internal links (e.g. /writing/...) are untouched.
+          protocols: ['http', 'https'],
+        },
+      ],
+    ],
+  },
+
+  integrations: [mdx()],
 });
