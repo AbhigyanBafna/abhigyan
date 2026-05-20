@@ -1,0 +1,127 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  crumb?: string;
+  backLink?: { href: string; label: string; suffix?: string };
+  ogImage?: string;
+  ogType?: "website" | "article";
+}
+
+const {
+  title = "Abhigyan Bafna",
+  description = "Abhigyan Bafna — software engineer in Bombay, building AI-native products.",
+  crumb,
+  backLink,
+  ogImage,
+  ogType = "website",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, "https://abhigyan.tech").href;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var prefersDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var theme = stored || (prefersDark ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {
+          /* localStorage may be unavailable; default to dark from markup */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="top-mark">
+        {
+          backLink ? (
+            <>
+              <a href={backLink.href} class="back-link">
+                ../{backLink.label}
+              </a>
+              {backLink.suffix && (
+                <span class="back-link-suffix">/{backLink.suffix}</span>
+              )}
+            </>
+          ) : crumb ? (
+            <>
+              <a href="/" class="site">abhigyan.tech</a>
+              <span class="sep">/</span>
+              <span class="crumb-current">{crumb}</span>
+            </>
+          ) : (
+            <span class="site">abhigyan.tech</span>
+          )
+        }
+      </header>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer class="floor">
+        <div class="floor-meta">
+          <span class="dot"></span>Mumbai<span class="sep">·</span>2026<span
+            class="sep">·</span
+          >Enjoy your journey<span class="sep">·</span><button
+            class="toggle"
+            id="theme-toggle"
+            type="button"
+            aria-label="Toggle light / dark mode"
+            title="Toggle light / dark"
+          >
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zm0 1v10a5 5 0 0 1 0-10z" />
+            </svg>
+          </button>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      const toggle = document.getElementById("theme-toggle");
+      toggle?.addEventListener("click", () => {
+        const next =
+          root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try {
+          localStorage.setItem("theme", next);
+        } catch (e) {
+          /* ignore */
+        }
+      });
+    </script>
+  </body>
+</html>

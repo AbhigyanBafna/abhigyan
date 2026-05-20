@@ -1,0 +1,41 @@
+---
+export const prerender = true;
+import Layout from "../../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { formatPostDate } from "../../../lib/constants";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("writing");
+  const tags = new Set<string>();
+  posts.forEach((p) => p.data.tags.forEach((t) => tags.add(t)));
+
+  return [...tags].map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter((p) => p.data.tags.includes(tag as any))
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<Layout
+  title={`Writing · #${tag} — Abhigyan Bafna`}
+  description={`Essays tagged #${tag}.`}
+  backLink={{ href: "/writing", label: "writing", suffix: `#${tag}` }}
+>
+  <div class="post-list">
+    {
+      posts.map((p) => (
+        <a class="post-item" href={`/writing/${p.id}`}>
+          <span class="post-title">{p.data.title}</span>
+          <span class="post-date">{formatPostDate(p.data.date)}</span>
+        </a>
+      ))
+    }
+  </div>
+</Layout>

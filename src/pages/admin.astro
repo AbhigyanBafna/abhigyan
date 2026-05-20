@@ -1,0 +1,216 @@
+---
+export const prerender = true;
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Stats — Abhigyan Bafna" crumb="admin">
+  <div class="admin-wrap">
+    <div id="auth-gate" class="auth-gate">
+      <div class="auth-gate-row">
+        <input
+          id="secret-input"
+          class="secret-input"
+          type="password"
+          placeholder="enter secret"
+          autocomplete="current-password"
+        />
+        <button id="auth-btn" class="auth-btn" type="button">unlock</button>
+      </div>
+      <p id="auth-error" class="auth-error" hidden>wrong secret</p>
+    </div>
+
+    <div id="stats-view" class="stats-view" hidden>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th class="col-slug">post</th>
+            <th class="col-num">views</th>
+            <th class="col-num">likes</th>
+          </tr>
+        </thead>
+        <tbody id="stats-body"></tbody>
+      </table>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const input = document.getElementById("secret-input") as HTMLInputElement;
+  const btn = document.getElementById("auth-btn")!;
+  const error = document.getElementById("auth-error")!;
+  const authGate = document.getElementById("auth-gate")!;
+  const statsView = document.getElementById("stats-view")!;
+  const tbody = document.getElementById("stats-body")!;
+
+  async function load(secret: string) {
+    const res = await fetch("/api/stats", {
+      headers: { Authorization: `Bearer ${secret}` },
+    });
+    if (res.status === 401) return false;
+    const { stats } = await res.json();
+    render(stats);
+    sessionStorage.setItem("stats_secret", secret);
+    authGate.hidden = true;
+    statsView.hidden = false;
+    return true;
+  }
+
+  function render(stats: { slug: string; views: number; likes: number }[]) {
+    tbody.innerHTML = stats
+      .map(
+        (s) => `
+        <tr>
+          <td class="col-slug"><a href="/writing/${s.slug}">${s.slug}</a></td>
+          <td class="col-num">${s.views.toLocaleString()}</td>
+          <td class="col-num">${s.likes.toLocaleString()}</td>
+        </tr>`
+      )
+      .join("");
+  }
+
+  async function attempt() {
+    const secret = input.value.trim();
+    if (!secret) return;
+    btn.textContent = "...";
+    const ok = await load(secret);
+    if (!ok) {
+      error.hidden = false;
+      btn.textContent = "unlock";
+      input.value = "";
+      input.focus();
+    }
+  }
+
+  btn.addEventListener("click", attempt);
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter") attempt(); });
+
+  // auto-unlock if secret is stored in session
+  const stored = sessionStorage.getItem("stats_secret");
+  if (stored) load(stored);
+</script>
+
+<style>
+  .admin-wrap {
+    width: 100%;
+    max-width: 580px;
+    margin: 0 auto;
+    padding: clamp(48px, 8vh, 96px) 0;
+  }
+
+  .auth-gate {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .auth-gate-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .secret-input {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-sm);
+    letter-spacing: 0.08em;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--whisper);
+    border-radius: 6px;
+    padding: 8px 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .secret-input:focus {
+    border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+  }
+
+  .secret-input::placeholder {
+    color: var(--hush);
+  }
+
+  .auth-btn {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-sm);
+    letter-spacing: 0.12em;
+    color: var(--quiet);
+    background: none;
+    border: 1px solid var(--whisper);
+    border-radius: 6px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .auth-btn:hover {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  }
+
+  .auth-error {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-sm);
+    color: var(--accent);
+    margin: 0;
+    width: 100%;
+  }
+
+  .stats-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .stats-table th,
+  .stats-table td {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--whisper);
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-sm);
+    letter-spacing: 0.06em;
+    text-align: left;
+  }
+
+  .stats-table th {
+    color: var(--hush);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .col-slug {
+    color: var(--quiet);
+    width: 100%;
+  }
+
+  .col-slug a {
+    color: var(--quiet);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .col-slug a:hover {
+    color: var(--accent);
+  }
+
+  .col-num {
+    color: var(--text);
+    text-align: right;
+    padding-left: 32px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .admin-wrap {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .col-num {
+      padding-left: 16px;
+    }
+  }
+</style>

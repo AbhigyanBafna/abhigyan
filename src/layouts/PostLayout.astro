@@ -1,0 +1,51 @@
+---
+import Layout from "./Layout.astro";
+import TagPill from "../components/TagPill.astro";
+import ShareButton from "../components/ShareButton.astro";
+import { getImage } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"writing">;
+}
+
+const { post } = Astro.props;
+const { title, description, author, tags, cover } = post.data;
+
+let ogImage: string | undefined;
+if (cover) {
+  const optimized = await getImage({ src: cover, width: 1200, format: "jpeg" });
+  ogImage = new URL(optimized.src, "https://abhigyan.tech").href;
+}
+---
+
+<Layout
+  title={`${title} — Abhigyan Bafna`}
+  description={description}
+  backLink={{ href: "/writing", label: "writing" }}
+  ogImage={ogImage}
+  ogType="article"
+>
+  <article class="post">
+    <header class="post-head">
+      <h1 class="post-title">{title}</h1>
+      <p class="post-byline">by {author}</p>
+    </header>
+
+    <div class="post-prose">
+      <slot />
+    </div>
+
+    {
+      tags.length > 0 && (
+        <footer class="post-tags">
+          {tags.map((t) => (
+            <TagPill tag={t} />
+          ))}
+        </footer>
+      )
+    }
+
+    <ShareButton title={title} slug={post.id} />
+  </article>
+</Layout>

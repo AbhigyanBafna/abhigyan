@@ -1,39 +1,28 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
+  "name": "abhigyan-tech",
+  "type": "module",
+  "version": "2.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@lyket/react": "^2.1.0",
-    "@portabletext/react": "^3.0.4",
-    "@sanity/icons": "^2.4.1",
-    "@sanity/vision": "^3.14.2",
-    "@vercel/analytics": "^1.0.1",
-    "caniuse-lite": "^1.0.30001572",
-    "clsx": "^1.2.1",
-    "eslint": "8.40.0",
-    "eslint-config-next": "13.4.1",
-    "framer-motion": "^10.12.9",
-    "html-react-parser": "^3.0.16",
-    "next": "13.4.1",
-    "next-sanity": "^4.3.2",
-    "react": "18.2.0",
-    "react-animated-social-icons": "^1.1.0",
-    "react-dom": "18.2.0",
-    "react-social-icons": "^5.15.0",
-    "react-twitter-embed": "^4.0.4",
-    "sanity": "^3.11.1",
-    "sanity-plugin-iframe-pane": "^2.3.1",
-    "sharp": "^0.32.1"
+    "@astrojs/mdx": "^5.0.4",
+    "@astrojs/vercel": "^10.0.7",
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@fontsource/raleway": "^5.2.8",
+    "@tailwindcss/vite": "^4.2.4",
+    "@upstash/redis": "^1.38.0",
+    "astro": "^6.2.2",
+    "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.14",
-    "tailwind-scrollbar": "^3.0.4",
-    "tailwindcss": "^3.3.2"
+    "rehype-external-links": "^3.0.0"
   }
 }
