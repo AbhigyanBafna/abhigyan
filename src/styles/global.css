@@ -774,25 +774,18 @@ a.site,
 .post-prose a {
   position: relative;
   color: var(--text);
-  padding-bottom: 1px;
-}
-
-.post-prose a::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: var(--link-under);
-  transition: background 0.25s ease;
+  text-decoration: underline;
+  text-decoration-color: var(--link-under);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.25s ease;
 }
 
 .post-prose a::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: -1px;
   height: 1px;
   width: 0;
   background: var(--accent);
@@ -805,7 +798,8 @@ a.site,
 
 .post-prose a:hover {
   color: var(--accent);
-  transition: color 0.22s ease;
+  text-decoration-color: transparent;
+  transition: color 0.22s ease, text-decoration-color 0.1s ease;
 }
 
 /* Figures (PostImage) — inset by default */

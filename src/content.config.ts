@@ -9,7 +9,7 @@ const writing = defineCollection({
       date: z.coerce.date(),
       description: z.string().max(160),
       tags: z.array(
-        z.enum(["creation", "experience", "insight", "technical"]),
+        z.enum(["advice", "creation", "experience", "insight", "technical"]),
       ),
       author: z.string().default("Abhigyan Bafna"),
       cover: image().optional(),
