@@ -1,0 +1,162 @@
+---
+export const prerender = true;
+import Layout from "../layouts/Layout.astro";
+
+const groups = [
+  {
+    label: "Let's Talk",
+    links: [
+      { name: "Save contact", hint: "vcf", href: "/api/card.vcf", external: false },
+      { name: "WhatsApp", hint: "chat", href: "/wa", external: true },
+      { name: "Email", hint: "gmail", href: "mailto:abhigyanbafna7@gmail.com", external: false },
+    ],
+  },
+  {
+    label: "Socials",
+    links: [
+      { name: "LinkedIn", hint: "in/abhigyanbafna", href: "https://www.linkedin.com/in/abhigyanbafna/", external: true },
+      { name: "GitHub", hint: "AbhigyanBafna", href: "https://github.com/AbhigyanBafna", external: true },
+      { name: "X", hint: "@Abhigyan_Bafna", href: "https://x.com/Abhigyan_Bafna", external: true },
+    ],
+  },
+  {
+    label: "Wander",
+    links: [
+      { name: "Website", hint: "abhigyan.tech", href: "/", external: false },
+      { name: "Projects", hint: "things built", href: "/projects", external: false },
+      { name: "Writing", hint: "thoughts", href: "/writing", external: false },
+    ],
+  },
+];
+---
+
+<Layout
+  title="Abhigyan Bafna — Card"
+  description="Contact card for Abhigyan Bafna — builder, AI consultant in Mumbai."
+  crumb="card"
+>
+  <div class="card-list">
+    <h1 class="name">Abhigyan Bafna</h1>
+    <p class="card-intro">
+     Save my contact, or pick a door.
+    </p>
+
+    {
+      groups.map((group) => (
+        <section class="card-group">
+          <h2 class="card-group-label">{group.label}</h2>
+          <ul class="card-rows">
+            {group.links.map((link) => (
+              <li>
+                <a
+                  class="card-row"
+                  href={link.href}
+                  {...(link.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  <span class="card-row-name">{link.name}</span>
+                  <span class="card-row-hint">{link.hint}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</Layout>
+
+<style>
+  .card-list {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: clamp(40px, 7vh, 88px) 0;
+    animation: rise 1s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .card-intro {
+    font-family: var(--font-serif);
+    font-size: var(--text-meta);
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    color: var(--quiet);
+    text-wrap: pretty;
+    margin-bottom: clamp(32px, 5vh, 52px);
+  }
+
+  .card-group + .card-group {
+    margin-top: clamp(28px, 4vh, 44px);
+  }
+
+  .card-group-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-sm);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--hush);
+    margin-bottom: 6px;
+  }
+
+  .card-rows {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .card-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--whisper);
+    text-decoration: none;
+    color: var(--text);
+    transition: padding-left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-row:hover {
+    padding-left: 8px;
+  }
+
+  .card-row-name {
+    font-family: var(--font-serif);
+    font-size: var(--text-h3);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+  }
+
+  .card-row:hover .card-row-name {
+    color: var(--accent);
+  }
+
+  .card-row-hint {
+    font-family: var(--font-mono);
+    font-size: var(--text-mono-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hush);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .card-row {
+      padding: 16px 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-list {
+      animation: none;
+    }
+    .card-row,
+    .card-row-name {
+      transition: none;
+    }
+  }
+</style>
