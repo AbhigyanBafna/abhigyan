@@ -56,16 +56,31 @@ import Layout from "../layouts/Layout.astro";
   }
 
   function render(stats: { slug: string; views: number; likes: number }[]) {
-    tbody.innerHTML = stats
-      .map(
-        (s) => `
-        <tr>
-          <td class="col-slug"><a href="/writing/${s.slug}">${s.slug}</a></td>
-          <td class="col-num">${s.views.toLocaleString()}</td>
-          <td class="col-num">${s.likes.toLocaleString()}</td>
-        </tr>`
-      )
-      .join("");
+    // Built as DOM nodes rather than innerHTML — slugs originate from public
+    // endpoints, so they must never be parsed as markup.
+    const rows = stats.map((s) => {
+      const tr = document.createElement("tr");
+
+      const slugCell = document.createElement("td");
+      slugCell.className = "col-slug";
+      const link = document.createElement("a");
+      link.href = `/writing/${encodeURIComponent(s.slug)}`;
+      link.textContent = s.slug;
+      slugCell.append(link);
+
+      const viewsCell = document.createElement("td");
+      viewsCell.className = "col-num";
+      viewsCell.textContent = s.views.toLocaleString();
+
+      const likesCell = document.createElement("td");
+      likesCell.className = "col-num";
+      likesCell.textContent = s.likes.toLocaleString();
+
+      tr.append(slugCell, viewsCell, likesCell);
+      return tr;
+    });
+
+    tbody.replaceChildren(...rows);
   }
 
   async function attempt() {

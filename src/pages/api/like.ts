@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { Redis } from "@upstash/redis";
+import { isValidSlug } from "../../lib/slug";
 
 const redis = new Redis({
   url: import.meta.env.UPSTASH_REDIS_REST_URL,
@@ -9,8 +10,8 @@ const redis = new Redis({
 export const POST: APIRoute = async ({ request }) => {
   try {
     const { slug, action } = await request.json();
-    if (!slug || typeof slug !== "string") {
-      return new Response(JSON.stringify({ error: "slug required" }), { status: 400 });
+    if (!isValidSlug(slug)) {
+      return new Response(JSON.stringify({ error: "invalid slug" }), { status: 400 });
     }
     let likes: number;
     if (action === "unlike") {
@@ -31,8 +32,8 @@ export const POST: APIRoute = async ({ request }) => {
 export const GET: APIRoute = async ({ url }) => {
   try {
     const slug = url.searchParams.get("slug");
-    if (!slug) {
-      return new Response(JSON.stringify({ error: "slug required" }), { status: 400 });
+    if (!isValidSlug(slug)) {
+      return new Response(JSON.stringify({ error: "invalid slug" }), { status: 400 });
     }
     const likes = (await redis.get<number>(`likes:${slug}`)) ?? 0;
     return new Response(JSON.stringify({ likes }), { status: 200 });
